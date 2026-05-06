@@ -1,0 +1,13 @@
+PLACE YOUR RESUME HERE
+======================
+File name must be exactly: resume.pdf (lowercase, case-sensitive)
+
+The Resume button in the navigation is already configured to open:
+  assets/resume.pdf
+
+Steps:
+1. Export your resume as a PDF
+2. Rename it to resume.pdf
+3. Replace this file (or delete this .txt and drop resume.pdf here)
+
+The button will then work automatically in any browser.

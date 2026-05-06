@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Balaji H — Full Stack Developer</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Balaji H — Full Stack Developer, MERN Stack Engineer, AI Enthusiast. Building scalable web applications with modern technologies." />
+  <meta name="keywords" content="Balaji H, Full Stack Developer, MERN Stack, React, Node.js, Portfolio, Web Development" />
+  <meta name="author" content="Balaji H" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Balaji H — Full Stack Developer" />
+  <meta property="og:description" content="Performance-driven Full Stack Developer building scalable MERN applications, RESTful APIs, and intelligent web systems." />
+  <meta property="og:type" content="website" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ===== PRELOADER ===== -->
+  <div id="preloader" aria-hidden="true">
+    <div class="preloader-logo">BH</div>
+    <div class="preloader-bar">
+      <div class="preloader-fill"></div>
+    </div>
+  </div>
+
+  <!-- ===== SCROLL PROGRESS BAR ===== -->
+  <div id="scrollProgress" role="progressbar" aria-label="Page scroll progress"></div>
+
+  <!-- ===== AMBIENT GLOW BLOBS ===== -->
+  <div class="blob blob-1" aria-hidden="true"></div>
+  <div class="blob blob-2" aria-hidden="true"></div>
+
+  <!-- ===== CUSTOM CURSOR ===== -->
+  <div class="cursor"      id="cursor"      aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing"  aria-hidden="true"></div>
+
+  <!-- ===== PARTICLE CANVAS ===== -->
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <a href="#hero" class="nav-logo" aria-label="Back to top">BH</a>
+
+    <ul class="nav-links">
+      <li><a href="#about"      data-num="01">About</a></li>
+      <li><a href="#skills"     data-num="02">Skills</a></li>
+      <li><a href="#projects"   data-num="03">Projects</a></li>
+      <li><a href="#experience" data-num="04">Experience</a></li>
+      <li><a href="#contact"    data-num="05">Contact</a></li>
+    </ul>
+
+    <!-- FIXED: Resume now uses correct relative path -->
+    <a href="assets/resume.pdf" class="nav-cta" target="_blank" rel="noopener noreferrer">
+      Resume ↗
+    </a>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- ===== MOBILE MENU ===== -->
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
+    <a href="#about"      class="mobile-link">About</a>
+    <a href="#skills"     class="mobile-link">Skills</a>
+    <a href="#projects"   class="mobile-link">Projects</a>
+    <a href="#experience" class="mobile-link">Experience</a>
+    <a href="#contact"    class="mobile-link">Contact</a>
+  </div>
+
+  <!-- ============================================================
+       HERO SECTION
+  ============================================================ -->
+  <section id="hero" aria-labelledby="hero-heading">
+    <div class="container">
+      <div class="hero-grid">
+
+        <!-- Left: Text content -->
+        <div class="hero-content">
+          <div class="hero-eyebrow reveal">Hello, world! 👋</div>
+
+          <h1 class="hero-name reveal" id="hero-heading" style="transition-delay: 0.1s">
+            <span class="highlight">Balaji</span><br>Hariharan
+          </h1>
+
+          <div class="hero-roles reveal" style="transition-delay: 0.2s">
+            <span id="typewriter"></span><span class="type-cursor" aria-hidden="true"></span>
+          </div>
+
+          <p class="hero-desc reveal" style="transition-delay: 0.3s">
+            Performance-driven Full Stack Developer building scalable MERN applications,
+            RESTful APIs, and intelligent web systems. B.Tech Biotechnology student at
+            Bannari Amman Institute of Technology.
+          </p>
+
+          <div class="hero-ctas reveal" style="transition-delay: 0.4s">
+            <a href="#projects" class="btn-primary">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/>
+                <path d="M12 3v18M3 7l9 4 9-4"/>
+              </svg>
+              View Projects
+            </a>
+            <!-- FIXED: smooth scroll to contact -->
+            <a href="#contact" class="btn-secondary" id="heroContactBtn">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Get In Touch
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Animated card -->
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-orbit hero-orbit-1">
+            <div class="orbit-dot orbit-dot-1"></div>
+          </div>
+          <div class="hero-orbit hero-orbit-2">
+            <div class="orbit-dot orbit-dot-2"></div>
+          </div>
+
+          <div class="hero-card" id="heroCard">
+            <div class="hero-avatar">BH</div>
+            <div class="hero-card-name">Balaji H</div>
+            <div class="hero-card-role">Full Stack Developer</div>
+
+            <div class="code-decoration">
+              <div><span class="c-blue">const</span> <span class="c-green">dev</span> = {</div>
+              <div>&nbsp;&nbsp;<span class="c-orange">stack</span>: <span class="c-violet">'MERN'</span>,</div>
+              <div>&nbsp;&nbsp;<span class="c-orange">passion</span>: <span class="c-violet">'AI+Web'</span>,</div>
+              <div>&nbsp;&nbsp;<span class="c-orange">status</span>: <span class="c-green">'open'</span></div>
+              <div>}</div>
+            </div>
+
+            <div class="hero-card-stats">
+              <div class="stat">
+                <div class="stat-num">2+</div>
+                <div class="stat-label">Projects</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num">50+</div>
+                <div class="stat-label">Students</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num">8.0</div>
+                <div class="stat-label">CGPA</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- .hero-grid -->
+    </div><!-- .container -->
+
+    <div class="scroll-indicator" aria-hidden="true">
+      <span>scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================
+       ABOUT SECTION
+  ============================================================ -->
+  <section id="about" aria-labelledby="about-heading">
+    <div class="container">
+      <div class="about-grid">
+
+        <!-- Visual monogram block -->
+        <div class="about-image-wrap reveal-left" aria-hidden="true">
+          <div class="about-image-inner">
+            <div class="about-image-fill">
+              <div class="about-monogram">BH</div>
+            </div>
+          </div>
+          <div class="about-badge">
+            <div class="badge-num">2026</div>
+            <div class="badge-label">Graduating Soon</div>
+          </div>
+        </div>
+
+        <!-- Text content -->
+        <div class="about-content reveal-right">
+          <div class="section-label">About Me</div>
+          <h2 class="section-title" id="about-heading">
+            Building things<br>that <span class="highlight">matter</span>
+          </h2>
+
+          <p>
+            I'm Balaji, a B.Tech Biotechnology student at Bannari Amman Institute of Technology
+            (graduating 2026) who discovered a deep passion for web development. I bridge the gap
+            between biological systems thinking and software engineering.
+          </p>
+          <p>
+            My focus is on building full-stack applications using the MERN stack — from designing
+            clean RESTful APIs to crafting intuitive user interfaces. I've led the technical
+            development of production-grade systems including an AI-powered doctor appointment
+            platform and an inventory management system.
+          </p>
+          <p>
+            Beyond code, I've mentored 50+ students in React and Java, led event coordination at
+            university festivals, and placed as runner-up at STROMZ 2K24 paper presentation.
+          </p>
+
+          <div class="about-tags">
+            <span class="about-tag">🎓 B.Tech Biotechnology</span>
+            <span class="about-tag">⚡ MERN Stack</span>
+            <span class="about-tag">🤖 AI Integration</span>
+            <span class="about-tag">🏆 Technical Trainer</span>
+            <span class="about-tag">📍 Trichy, Tamil Nadu</span>
+          </div>
+        </div>
+
+      </div><!-- .about-grid -->
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================
+       SKILLS SECTION
+  ============================================================ -->
+  <section id="skills" aria-labelledby="skills-heading">
+    <div class="container">
+
+      <div class="reveal">
+        <div class="section-label">Technical Skills</div>
+        <h2 class="section-title" id="skills-heading">
+          My <span class="highlight">Toolkit</span>
+        </h2>
+      </div>
+
+      <!-- Filter pills -->
+      <div class="skills-categories reveal" style="transition-delay: 0.1s" role="group" aria-label="Filter skills by category">
+        <button class="cat-pill active" data-filter="all">All</button>
+        <button class="cat-pill" data-filter="lang">Languages</button>
+        <button class="cat-pill" data-filter="frontend">Frontend</button>
+        <button class="cat-pill" data-filter="backend">Backend</button>
+        <button class="cat-pill" data-filter="tools">Tools</button>
+      </div>
+
+      <!-- Skills grid -->
+      <div class="skills-grid" id="skillsGrid">
+
+        <!-- Languages -->
+        <div class="skill-card lang reveal" style="transition-delay: 0.05s">
+          <span class="skill-icon">☕</span>
+          <div class="skill-name">Java</div>
+          <div class="skill-level">Proficient</div>
+        </div>
+        <div class="skill-card lang reveal" style="transition-delay: 0.1s">
+          <span class="skill-icon">🗄️</span>
+          <div class="skill-name">SQL</div>
+          <div class="skill-level">Proficient</div>
+        </div>
+        <div class="skill-card lang reveal" style="transition-delay: 0.15s">
+          <span class="skill-icon">📜</span>
+          <div class="skill-name">TypeScript</div>
+          <div class="skill-level">Intermediate</div>
+        </div>
+
+        <!-- Frontend -->
+        <div class="skill-card frontend reveal" style="transition-delay: 0.1s">
+          <span class="skill-icon">⚛️</span>
+          <div class="skill-name">React.js</div>
+          <div class="skill-level">Advanced</div>
+        </div>
+        <div class="skill-card frontend reveal" style="transition-delay: 0.15s">
+          <span class="skill-icon">🌐</span>
+          <div class="skill-name">HTML / CSS</div>
+          <div class="skill-level">Advanced</div>
+        </div>
+        <div class="skill-card frontend reveal" style="transition-delay: 0.2s">
+          <span class="skill-icon">🐜</span>
+          <div class="skill-name">Ant Design</div>
+          <div class="skill-level">Intermediate</div>
+        </div>
+        <div class="skill-card frontend reveal" style="transition-delay: 0.25s">
+          <span class="skill-icon">🔄</span>
+          <div class="skill-name">Redux Toolkit</div>
+          <div class="skill-level">Intermediate</div>
+        </div>
+        <div class="skill-card frontend reveal" style="transition-delay: 0.3s">
+          <span class="skill-icon">⚡</span>
+          <div class="skill-name">Vite</div>
+          <div class="skill-level">Intermediate</div>
+        </div>
+
+        <!-- Backend -->
+        <div class="skill-card backend reveal" style="transition-delay: 0.15s">
+          <span class="skill-icon">🟢</span>
+          <div class="skill-name">Node.js</div>
+          <div class="skill-level">Advanced</div>
+        </div>
+        <div class="skill-card backend reveal" style="transition-delay: 0.2s">
+          <span class="skill-icon">🚂</span>
+          <div class="skill-name">Express.js</div>
+          <div class="skill-level">Advanced</div>
+        </div>
+        <div class="skill-card backend reveal" style="transition-delay: 0.25s">
+          <span class="skill-icon">🍃</span>
+          <div class="skill-name">MongoDB</div>
+          <div class="skill-level">Advanced</div>
+        </div>
+        <div class="skill-card backend reveal" style="transition-delay: 0.3s">
+          <span class="skill-icon">🐬</span>
+          <div class="skill-name">MySQL</div>
+          <div class="skill-level">Intermediate</div>
+        </div>
+        <div class="skill-card backend reveal" style="transition-delay: 0.35s">
+          <span class="skill-icon">🔐</span>
+          <div class="skill-name">JWT / RBAC</div>
+          <div class="skill-level">Proficient</div>
+        </div>
+        <div class="skill-card backend reveal" style="transition-delay: 0.4s">
+          <span class="skill-icon">🌐</span>
+          <div class="skill-name">REST APIs</div>
+          <div class="skill-level">Advanced</div>
+        </div>
+
+        <!-- Tools -->
+        <div class="skill-card tools reveal" style="transition-delay: 0.2s">
+          <span class="skill-icon">🐙</span>
+          <div class="skill-name">Git / GitHub</div>
+          <div class="skill-level">Proficient</div>
+        </div>
+        <div class="skill-card tools reveal" style="transition-delay: 0.25s">
+          <span class="skill-icon">📮</span>
+          <div class="skill-name">Postman</div>
+          <div class="skill-level">Proficient</div>
+        </div>
+        <div class="skill-card tools reveal" style="transition-delay: 0.3s">
+          <span class="skill-icon">🤖</span>
+          <div class="skill-name">Gemini API</div>
+          <div class="skill-level">Intermediate</div>
+        </div>
+        <div class="skill-card tools reveal" style="transition-delay: 0.35s">
+          <span class="skill-icon">🔬</span>
+          <div class="skill-name">Google Colab</div>
+          <div class="skill-level">Familiar</div>
+        </div>
+
+      </div><!-- .skills-grid -->
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================
+       PROJECTS SECTION
+  ============================================================ -->
+  <section id="projects" aria-labelledby="projects-heading">
+    <div class="container">
+
+      <div class="reveal">
+        <div class="section-label">Featured Work</div>
+        <h2 class="section-title" id="projects-heading">
+          Things I've <span class="highlight">Built</span>
+        </h2>
+      </div>
+
+      <!-- Filter buttons -->
+      <div class="projects-filters reveal" style="transition-delay: 0.1s" role="group" aria-label="Filter projects by type">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="web">Web Apps</button>
+        <button class="filter-btn" data-filter="ai">AI Powered</button>
+        <button class="filter-btn" data-filter="backend">Backend</button>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- Project 1: Inventory Management -->
+        <article class="project-card reveal" data-tags="web backend" style="transition-delay: 0.1s">
+          <div class="project-preview" style="background: linear-gradient(135deg, #0f2442, #1a0f42);">
+            <div class="project-preview-grid"></div>
+            <div class="project-preview-bg">
+              <div class="project-preview-icon">📦</div>
+            </div>
+            <div class="project-number">01</div>
+            <div class="project-tag-floating" style="color: var(--cyan);">Feb – Apr 2026</div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-name">Inventory Management System</h3>
+            <p class="project-desc">
+              Scalable full-stack web application for product tracking and order cycle management,
+              featuring secure JWT authentication and role-based access control.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">React</span>
+              <span class="tech-tag">Vite</span>
+              <span class="tech-tag">TypeScript</span>
+              <span class="tech-tag">Redux</span>
+              <span class="tech-tag">Node.js</span>
+              <span class="tech-tag">MongoDB</span>
+              <span class="tech-tag">JWT</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/BalajiHariharan30" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="View Inventory Management System on GitHub">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                </svg>
+                GitHub
+              </a>
+              <a href="#" class="project-link" aria-label="Live demo coming soon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  <polyline points="15,3 21,3 21,9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+                Live Demo
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2: CareSync -->
+        <article class="project-card reveal" data-tags="web ai backend" style="transition-delay: 0.15s">
+          <div class="project-preview" style="background: linear-gradient(135deg, #1a0f2e, #0f2030);">
+            <div class="project-preview-grid"></div>
+            <div class="project-preview-bg">
+              <div class="project-preview-icon">🏥</div>
+            </div>
+            <div class="project-number">02</div>
+            <div class="project-tag-floating" style="color: var(--violet);">Dec 2025 – Feb 2026</div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-name">CareSync — AI Doctor Appointment</h3>
+            <p class="project-desc">
+              AI-powered MERN-based doctor appointment system supporting patients, doctors, and admins.
+              Features real-time telemedicine, AI triage, and intelligent queue management.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">React</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">Node.js</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">MongoDB</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">Gemini AI</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">JWT</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/BalajiHariharan30" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="View CareSync on GitHub">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                </svg>
+                GitHub
+              </a>
+              <a href="#" class="project-link" aria-label="Live demo coming soon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  <polyline points="15,3 21,3 21,9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+                Live Demo
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3: Portfolio -->
+        <article class="project-card reveal" data-tags="web" style="transition-delay: 0.2s">
+          <div class="project-preview" style="background: linear-gradient(135deg, #0f2418, #1a2010);">
+            <div class="project-preview-grid"></div>
+            <div class="project-preview-bg">
+              <div class="project-preview-icon">🌐</div>
+            </div>
+            <div class="project-number">03</div>
+            <div class="project-tag-floating" style="color: var(--emerald);">2026</div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-name">Portfolio v2 — This Website</h3>
+            <p class="project-desc">
+              A premium personal portfolio built with semantic HTML5, vanilla CSS animations, and
+              JavaScript. No frameworks — pure craft, performance focus, and pixel-perfect design.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag" style="color: var(--emerald); background: rgba(104,211,145,0.08); border-color: rgba(104,211,145,0.2);">HTML5</span>
+              <span class="tech-tag" style="color: var(--emerald); background: rgba(104,211,145,0.08); border-color: rgba(104,211,145,0.2);">CSS3</span>
+              <span class="tech-tag" style="color: var(--emerald); background: rgba(104,211,145,0.08); border-color: rgba(104,211,145,0.2);">JavaScript</span>
+              <span class="tech-tag" style="color: var(--emerald); background: rgba(104,211,145,0.08); border-color: rgba(104,211,145,0.2);">Canvas API</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/BalajiHariharan30" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="View Portfolio on GitHub">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- .projects-grid -->
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================
+       EXPERIENCE SECTION
+  ============================================================ -->
+  <section id="experience" aria-labelledby="experience-heading">
+    <div class="container">
+
+      <div class="reveal">
+        <div class="section-label">Journey</div>
+        <h2 class="section-title" id="experience-heading">
+          Experience &amp; <span class="highlight">Timeline</span>
+        </h2>
+      </div>
+
+      <div class="timeline">
+
+        <!-- Item 1 -->
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <time class="timeline-date" datetime="2026-02">Feb 2026 – Apr 2026</time>
+          <h3 class="timeline-title">Inventory Management System</h3>
+          <div class="timeline-org">Full Stack Developer · Personal Project</div>
+          <div class="timeline-content">
+            <ul>
+              <li>Engineered scalable full-stack web application using React, Vite, TypeScript, Redux Toolkit, and Ant Design</li>
+              <li>Architected backend services using Node.js and Express with MongoDB for product tracking and order cycle management</li>
+              <li>Implemented secure JWT authentication and role-based access control (RBAC) to protect sensitive data</li>
+              <li>Designed and optimized RESTful APIs with strict server-side validation to ensure reliable data processing</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="timeline-item reveal" style="transition-delay: 0.1s">
+          <div class="timeline-dot violet"></div>
+          <time class="timeline-date" datetime="2025-12">Dec 2025 – Feb 2026</time>
+          <h3 class="timeline-title">CareSync — AI Doctor Appointment System</h3>
+          <div class="timeline-org">Full Stack Developer · Personal Project</div>
+          <div class="timeline-content">
+            <ul>
+              <li>Developed scalable MERN-based doctor appointment system for patients, doctors, and admins</li>
+              <li>Built secure backend services using Node.js, Express, MongoDB with JWT authentication and RBAC</li>
+              <li>Designed optimized REST APIs for appointment booking, queue management, prescriptions, and medical records</li>
+              <li>Integrated AI features using Google Gemini API and enabled real-time telemedicine</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="timeline-item reveal" style="transition-delay: 0.2s">
+          <div class="timeline-dot"></div>
+          <time class="timeline-date" datetime="2022">2022 – 2026</time>
+          <h3 class="timeline-title">Technical Trainer &amp; Mentor</h3>
+          <div class="timeline-org">Bannari Amman Institute of Technology</div>
+          <div class="timeline-content">
+            <ul>
+              <li>Mentored 50+ students in React programming and Java fundamentals</li>
+              <li>Improved departmental technical proficiency and coding practices</li>
+              <li>Runner-up in Paper Presentation at STROMZ 2K24</li>
+              <li>Presented project proposal at VISAI 2023, Vel Tech Madras</li>
+              <li>Directed logistics and technical coordination for LEO-FEST &amp; AURA'24</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="timeline-item reveal" style="transition-delay: 0.3s">
+          <div class="timeline-dot violet"></div>
+          <time class="timeline-date" datetime="2022">2022 – 2026</time>
+          <h3 class="timeline-title">B.Tech Biotechnology</h3>
+          <div class="timeline-org">Bannari Amman Institute of Technology · CGPA: 8.0/10</div>
+          <div class="timeline-content">
+            <ul>
+              <li>Pursuing B.Tech in Biotechnology while self-mastering full-stack web development</li>
+              <li>Applied systems thinking from biology to software architecture design</li>
+            </ul>
+          </div>
+        </div>
+
+      </div><!-- .timeline -->
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================
+       CERTIFICATIONS SECTION
+  ============================================================ -->
+  <section id="certs" aria-labelledby="certs-heading">
+    <div class="container">
+
+      <div class="reveal">
+        <div class="section-label">Credentials</div>
+        <h2 class="section-title" id="certs-heading">
+          Certifications &amp; <span class="highlight">Achievements</span>
+        </h2>
+      </div>
+
+      <div class="certs-grid">
+        <div class="cert-card reveal" style="transition-delay: 0.05s">
+          <div class="cert-icon">🏆</div>
+          <div>
+            <div class="cert-name">Problem Solving (Intermediate)</div>
+            <div class="cert-issuer">HackerRank · Verified</div>
+          </div>
+        </div>
+        <div class="cert-card reveal" style="transition-delay: 0.1s">
+          <div class="cert-icon">🌐</div>
+          <div>
+            <div class="cert-name">Complete 2024 Web Development Bootcamp</div>
+            <div class="cert-issuer">Udemy · Dr. Angela Yu</div>
+          </div>
+        </div>
+        <div class="cert-card reveal" style="transition-delay: 0.15s">
+          <div class="cert-icon">🥈</div>
+          <div>
+            <div class="cert-name">Runner-up · STROMZ 2K24</div>
+            <div class="cert-issuer">Paper Presentation Competition</div>
+          </div>
+        </div>
+        <div class="cert-card reveal" style="transition-delay: 0.2s">
+          <div class="cert-icon">🎤</div>
+          <div>
+            <div class="cert-name">Project Presenter · VISAI 2023</div>
+            <div class="cert-issuer">Vel Tech Madras</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================
+       CONTACT SECTION
+  ============================================================ -->
+  <section id="contact" aria-labelledby="contact-heading">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Left: Info -->
+        <div class="contact-info reveal-left">
+          <div class="section-label">Contact</div>
+          <h2 class="section-title" id="contact-heading">
+            Let's <span class="highlight">Connect</span>
+          </h2>
+          <p>
+            I'm actively looking for new opportunities — whether it's a full-time role,
+            freelance project, or just a friendly chat about tech. My inbox is always open.
+          </p>
+
+          <div class="contact-links">
+            <a href="mailto:h.balaji1964@gmail.com" class="contact-link-item">
+              <div class="contact-link-icon">📧</div>
+              <div>
+                <div class="contact-link-label">Email</div>
+                <div class="contact-link-value">h.balaji1964@gmail.com</div>
+              </div>
+            </a>
+            <a href="tel:+919677674828" class="contact-link-item">
+              <div class="contact-link-icon">📱</div>
+              <div>
+                <div class="contact-link-label">Phone</div>
+                <div class="contact-link-value">+91 9677674828</div>
+              </div>
+            </a>
+            <a href="https://linkedin.com/in/balaji-h" target="_blank" rel="noopener noreferrer" class="contact-link-item">
+              <div class="contact-link-icon">💼</div>
+              <div>
+                <div class="contact-link-label">LinkedIn</div>
+                <div class="contact-link-value">linkedin.com/in/balaji-h</div>
+              </div>
+            </a>
+            <a href="https://github.com/BalajiHariharan30" target="_blank" rel="noopener noreferrer" class="contact-link-item">
+              <div class="contact-link-icon">🐙</div>
+              <div>
+                <div class="contact-link-label">GitHub</div>
+                <div class="contact-link-value">github.com/BalajiHariharan30</div>
+              </div>
+            </a>
+            <div class="contact-link-item">
+              <div class="contact-link-icon">📍</div>
+              <div>
+                <div class="contact-link-label">Location</div>
+                <div class="contact-link-value">Trichy, Tamil Nadu, India</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="reveal-right">
+          <form class="contact-form" id="contactForm" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="name">Your Name</label>
+              <input type="text" id="name" name="name" class="form-input" placeholder="John Doe" required autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email Address</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="john@example.com" required autocomplete="email" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" class="form-input" placeholder="Let's collaborate on…" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="message">Message</label>
+              <textarea id="message" name="message" class="form-textarea" placeholder="Tell me about your project or opportunity…" required></textarea>
+            </div>
+            <button type="submit" class="form-submit">
+              Send Message
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <line x1="22" y1="2" x2="11" y2="13"/>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+            </button>
+            <div class="form-success" id="formSuccess" role="alert">
+              ✅ Message sent! I'll get back to you soon.
+            </div>
+          </form>
+        </div>
+
+      </div><!-- .contact-grid -->
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">Balaji H</div>
+        <p class="footer-copy">© 2026 Balaji H · All rights reserved</p>
+        <div class="footer-socials">
+          <a href="https://github.com/BalajiHariharan30" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub profile">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </a>
+          <a href="https://linkedin.com/in/balaji-h" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn profile">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+          <a href="mailto:h.balaji1964@gmail.com" class="social-icon" aria-label="Send email">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== THEME TOGGLE ===== -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" title="Toggle theme">🌙</button>
+
+  <!-- ===== MAIN SCRIPT (deferred for performance) ===== -->
+  <script src="js/script.js" defer></script>
+</body>
+</html>
