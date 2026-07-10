@@ -238,7 +238,14 @@
 
       const filter = pill.dataset.filter;
       document.querySelectorAll('.skill-card').forEach(card => {
-        card.style.display = (filter === 'all' || card.classList.contains(filter)) ? '' : 'none';
+        const match = filter === 'all' || card.classList.contains(filter);
+        if (match) {
+          card.style.display = '';
+          card.classList.add('fade-in');
+        } else {
+          card.style.display = 'none';
+          card.classList.remove('fade-in');
+        }
       });
     });
   });
@@ -255,7 +262,14 @@
       const filter = btn.dataset.filter;
       document.querySelectorAll('.project-card').forEach(card => {
         const tags = card.dataset.tags || '';
-        card.style.display = (filter === 'all' || tags.includes(filter)) ? '' : 'none';
+        const match = filter === 'all' || tags.includes(filter);
+        if (match) {
+          card.style.display = '';
+          card.classList.add('fade-in');
+        } else {
+          card.style.display = 'none';
+          card.classList.remove('fade-in');
+        }
       });
     });
   });
@@ -301,22 +315,66 @@
 
   form.addEventListener('submit', e => {
     e.preventDefault();
+
+    // Browser validation check
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
     const btn        = form.querySelector('.form-submit');
+    const originalText = btn.innerHTML;
     btn.textContent  = 'Sending…';
     btn.disabled     = true;
 
-    // Simulate send (replace with real endpoint integration)
-    setTimeout(() => {
-      btn.textContent = 'Send Message';
-      btn.disabled    = false;
+    const accessKeyInput = form.querySelector('input[name="access_key"]');
+    const accessKey = accessKeyInput ? accessKeyInput.value : '';
 
-      const successEl = document.getElementById('formSuccess');
-      if (successEl) {
-        successEl.classList.add('show');
-        form.reset();
-        setTimeout(() => successEl.classList.remove('show'), 4000);
+    // Fallback simulation mode if the placeholder key is not replaced yet
+    if (!accessKey || accessKey.includes('YOUR_WEB3FORMS_ACCESS_KEY')) {
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.disabled  = false;
+
+        const successEl = document.getElementById('formSuccess');
+        if (successEl) {
+          successEl.innerHTML = '✅ Message simulation success! <br><span style="font-size: 11px; opacity: 0.8;">Setup a Web3Forms access key in index.html to receive actual emails.</span>';
+          successEl.classList.add('show');
+          form.reset();
+          setTimeout(() => successEl.classList.remove('show'), 6000);
+        }
+      }, 1500);
+      return;
+    }
+
+    // Real send via Web3Forms AJAX
+    const formData = new FormData(form);
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: formData
+    })
+    .then(async (response) => {
+      const json = await response.json();
+      if (response.status === 200) {
+        const successEl = document.getElementById('formSuccess');
+        if (successEl) {
+          successEl.textContent = "✅ Message sent! I'll get back to you soon.";
+          successEl.classList.add('show');
+          form.reset();
+          setTimeout(() => successEl.classList.remove('show'), 5000);
+        }
+      } else {
+        alert(json.message || "Failed to send message. Please try again.");
       }
-    }, 1500);
+    })
+    .catch(error => {
+      console.error('Error submitting form:', error);
+      alert("Submission error. Please check your network connection.");
+    })
+    .finally(() => {
+      btn.innerHTML = originalText;
+      btn.disabled  = false;
+    });
   });
 })();
 

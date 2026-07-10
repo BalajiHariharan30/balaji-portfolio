@@ -1495,6 +1495,28 @@ body.light {
   --text-muted:    #a0aec0;
 }
 
+/* Disable custom cursor on mobile/touch screens */
+@media (max-width: 900px), (hover: none) {
+  .cursor, .cursor-ring {
+    display: none !important;
+  }
+}
+
+/* Card filter fade-in animation */
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.project-card.fade-in, .skill-card.fade-in {
+  animation: cardFadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 900px) {
   .container    { padding: 0 24px; }
