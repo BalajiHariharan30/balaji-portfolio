@@ -1,0 +1,12 @@
+# Dependency directories
+node_modules/
+
+# Local env files (keeps API keys safe from git)
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
