@@ -1,5 +1,5 @@
 PLACE YOUR RESUME HERE
-======================
+c:\Users\hbala\Downloads\resume.pdf
 File name must be exactly: resume.pdf (lowercase, case-sensitive)
 
 The Resume button in the navigation is already configured to open:
