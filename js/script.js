@@ -426,3 +426,267 @@
     });
   }, { passive: true });
 })();
+
+
+/* ===================== CHATBOT LOGIC ===================== */
+(function initChatbot() {
+  const chatbot = document.getElementById('chatbot');
+  const toggleBtn = document.getElementById('chatbotToggle');
+  const windowEl = document.getElementById('chatbotWindow');
+  const closeBtn = document.getElementById('chatbotClose');
+  const form = document.getElementById('chatbotForm');
+  const input = document.getElementById('chatbotInput');
+  const messagesContainer = document.getElementById('chatbotMessages');
+
+  if (!toggleBtn || !windowEl || !closeBtn || !form || !input || !messagesContainer) return;
+
+  let isChatOpen = false;
+  let chatHistory = []; // stores conversation turns
+
+  // Toggle chatbot window open/closed
+  toggleBtn.addEventListener('click', () => {
+    isChatOpen = !isChatOpen;
+    windowEl.classList.toggle('open', isChatOpen);
+  });
+
+  closeBtn.addEventListener('click', () => {
+    isChatOpen = false;
+    windowEl.classList.remove('open');
+  });
+
+  // Handle message sending
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const userText = input.value.trim();
+    if (!userText) return;
+
+    // Render user message
+    appendMessage(userText, 'user');
+    input.value = '';
+
+    // Show bot typing loader
+    const loadingId = appendLoader();
+
+    // Call serverless API route securely
+    fetch('/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: userText,
+        history: chatHistory
+      })
+    })
+    .then(async response => {
+      removeLoader(loadingId);
+      if (response.ok) {
+        const data = await response.json();
+        const reply = data.reply || "I encountered an error. Please try again.";
+        appendMessage(reply, 'bot');
+        // Save turn to history
+        chatHistory.push({ role: 'user', parts: [{ text: userText }] });
+        chatHistory.push({ role: 'assistant', parts: [{ text: reply }] });
+      } else {
+        const errData = await response.json();
+        console.error(errData);
+        appendMessage("Sorry, I could not connect to Balaji's server. Please verify the API setup.", 'bot');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      removeLoader(loadingId);
+      appendMessage("Failed to send message due to a connection issue.", 'bot');
+    });
+  });
+
+  function appendMessage(text, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `msg ${sender}-msg`;
+    msgDiv.innerHTML = text.replace(/\n/g, '<br>');
+    messagesContainer.appendChild(msgDiv);
+    scrollToBottom();
+  }
+
+  function appendLoader() {
+    const loaderId = 'loading-' + Date.now();
+    const loaderDiv = document.createElement('div');
+    loaderDiv.className = 'bot-loading';
+    loaderDiv.id = loaderId;
+    loaderDiv.innerHTML = '<span></span><span></span><span></span>';
+    messagesContainer.appendChild(loaderDiv);
+    scrollToBottom();
+    return loaderId;
+  }
+
+  function removeLoader(id) {
+    const loader = document.getElementById(id);
+    if (loader) loader.remove();
+  }
+
+  function scrollToBottom() {
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+})();
+
+
+/* ===================== PROJECT DETAILS DATA & MODAL LOGIC ===================== */
+const projectDetails = {
+  caresync: {
+    title: "CareSync — AI Doctor Appointment System",
+    date: "Feb – Apr 2026",
+    tags: "MERN Stack · Gemini AI · Telemedicine",
+    desc: "CareSync is a state-of-the-art healthcare orchestration system designed to streamline patient triaging, doctor availability, appointment scheduling, and remote healthcare consultations. It automates queue management and diagnoses priority routing using Google Gemini AI.",
+    architecture: `
+      <div class="diag-flow">
+        <div class="diag-node"><strong>Client Dashboard</strong><br>(React + Vite)</div>
+        <div class="diag-arrow">API Requests</div>
+        <div class="diag-node"><strong>Express Router</strong><br>(Node Backend)</div>
+        <div class="diag-arrow">Auth Verification</div>
+        <div class="diag-node"><strong>Data Storage</strong><br>(MongoDB Cluster)</div>
+      </div>
+      <div class="diag-flow" style="justify-content: center; margin-top: 20px;">
+        <div class="diag-node" style="border-color: var(--violet);"><strong>AI Triage System</strong><br>(Google Gemini API)</div>
+      </div>
+    `,
+    features: [
+      "<strong>AI-Powered Triage:</strong> Seamlessly analyzes patient symptom inputs to assign clinical urgency categories.",
+      "<strong>Secure Authentication:</strong> Role-based access control (RBAC) separated for Patients, Doctors, and Administrators using JSON Web Tokens (JWT).",
+      "<strong>Real-time Telemedicine:</strong> Integrated video and text chat interfaces for remote clinical appointments.",
+      "<strong>Queue Scheduling:</strong> Dynamic queue calculation which optimizes waiting times based on emergency levels."
+    ],
+    tech: ["React.js", "Node.js", "Express.js", "MongoDB", "Gemini AI", "JWT", "RBAC", "Vercel"],
+    github: "https://github.com/BalajiHariharan30",
+    live: "https://care-sync-pro-lbel.vercel.app/"
+  },
+  inventory: {
+    title: "Inventory Management System",
+    date: "Dec 2025 – Feb 2026",
+    tags: "MERN Stack · Redux Toolkit · Security",
+    desc: "A production-grade supply chain tracking system built to manage warehouse stocks, vendor shipments, customer invoice cycles, and automatic re-ordering thresholds. It features strict audit logging and multi-warehouse visualization tools.",
+    architecture: `
+      <div class="diag-flow">
+        <div class="diag-node"><strong>Admin Dashboard</strong><br>(React + Ant Design)</div>
+        <div class="diag-arrow">Redux Actions</div>
+        <div class="diag-node"><strong>Inventory API</strong><br>(Node + Express)</div>
+        <div class="diag-arrow">Transaction Validation</div>
+        <div class="diag-node"><strong>DB Stores</strong><br>(MongoDB)</div>
+      </div>
+    `,
+    features: [
+      "<strong>Warehouse Stock Tracking:</strong> Live status and count monitoring of products across multiple geographical locations.",
+      "<strong>Role-Based Audits:</strong> Granular RBAC allowing staff to log items while restricting approval controls to supervisors.",
+      "<strong>Redux State Sync:</strong> Real-time caching and front-end synchronization using Redux Toolkit to prevent race conditions during updates.",
+      "<strong>Dynamic Reporting:</strong> Detailed dashboard charts indicating transaction frequencies, depletion warnings, and supply-chain efficiency."
+    ],
+    tech: ["React.js", "Vite", "Redux Toolkit", "Ant Design", "Node.js", "Express.js", "MongoDB", "JWT", "RBAC"],
+    github: "https://github.com/BalajiHariharan30",
+    live: null
+  },
+  portfolio: {
+    title: "Personal Portfolio v2",
+    date: "2026",
+    tags: "Vanilla JS · CSS Animations · Performance",
+    desc: "A highly optimized and aesthetic personal developer website. It features custom interactive particles, magnetic buttons, smooth scroll-reveal and responsive design. The contact form is fully integrated using AJAX directly to a secure email forwarder.",
+    architecture: `
+      <div class="diag-flow">
+        <div class="diag-node"><strong>Static Site</strong><br>(HTML5 + CSS3 + JS)</div>
+        <div class="diag-arrow">AJAX Fetch</div>
+        <div class="diag-node"><strong>Secure Handlers</strong><br>(Vite / Vercel Edge)</div>
+        <div class="diag-arrow">Web3Forms / API</div>
+        <div class="diag-node"><strong>User's Inbox</strong><br>(Email forwarding)</div>
+      </div>
+    `,
+    features: [
+      "<strong>Fluid Animations:</strong> Customized canvas particle rendering, magnetic hover effects, and section scroll reveal using Intersection Observer.",
+      "<strong>Interactive Chatbot:</strong> Custom AI Assistant integrated securely via Vercel serverless API routing using Gemini 1.5 Flash.",
+      "<strong>Light/Dark Mode:</strong> Highly optimized custom theme variable toggles without page flashes.",
+      "<strong>Fully Accessible & SEO Ready:</strong> Out-of-the-box support for high-quality Open Graph card previews, keyboard navigation, and semantic markers."
+    ],
+    tech: ["HTML5", "CSS3", "JavaScript", "Canvas API", "Intersection Observer", "Web3Forms API", "Vercel API"],
+    github: "https://github.com/BalajiHariharan30",
+    live: "https://balaji-portfolio-alpha.vercel.app/"
+  }
+};
+
+(function initProjectModals() {
+  const modal = document.getElementById('projectModal');
+  const backdrop = document.getElementById('projectModalBackdrop');
+  const closeBtn = document.getElementById('projectModalClose');
+  const modalBody = document.getElementById('projectModalBody');
+
+  if (!modal || !backdrop || !closeBtn || !modalBody) return;
+
+  // Add click listeners to all project cards
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('click', e => {
+      // Prevent opening modal if user clicked GitHub/Live demo links inside the card
+      if (e.target.closest('a')) return;
+
+      const titleEl = card.querySelector('.project-name');
+      if (!titleEl) return;
+
+      const titleText = titleEl.textContent.toLowerCase();
+      let key = '';
+
+      if (titleText.includes('caresync')) key = 'caresync';
+      else if (titleText.includes('inventory')) key = 'inventory';
+      else if (titleText.includes('portfolio') || titleText.includes('website')) key = 'portfolio';
+
+      const proj = projectDetails[key];
+      if (!proj) return;
+
+      // Inject dynamic content into modal body
+      modalBody.innerHTML = `
+        <h2 class="modal-project-title">${proj.title}</h2>
+        <div class="modal-project-meta">
+          <span>📅 ${proj.date}</span>
+          <span>•</span>
+          <span>🏷️ ${proj.tags}</span>
+        </div>
+        <p class="modal-project-desc">${proj.desc}</p>
+        
+        <h3 class="modal-section-title">Key Features</h3>
+        <ul style="margin-left: 20px; margin-bottom: 32px; display: flex; flex-direction: column; gap: 8px; color: var(--text-secondary);">
+          ${proj.features.map(f => `<li>${f}</li>`).join('')}
+        </ul>
+
+        <h3 class="modal-section-title">System Architecture Flow</h3>
+        <div class="architecture-diagram">
+          ${proj.architecture}
+        </div>
+
+        <h3 class="modal-section-title">Technologies Used</h3>
+        <div class="modal-tech-list">
+          ${proj.tech.map(t => `<span class="tech-tag" style="margin-bottom: 8px;">${t}</span>`).join('')}
+        </div>
+
+        <div class="modal-links">
+          ${proj.github ? `
+            <a href="${proj.github}" class="btn-primary" target="_blank" rel="noopener noreferrer">
+              View on GitHub
+            </a>
+          ` : ''}
+          ${proj.live ? `
+            <a href="${proj.live}" class="btn-secondary" target="_blank" rel="noopener noreferrer">
+              Live Demo ↗
+            </a>
+          ` : ''}
+        </div>
+      `;
+
+      // Open modal
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden'; // prevent background scrolling
+    });
+  });
+
+  // Close modal events
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+})();
