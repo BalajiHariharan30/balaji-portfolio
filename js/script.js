@@ -480,7 +480,7 @@ const projectDetails = {
     ],
     tech: ["React.js", "Vite", "Redux Toolkit", "Ant Design", "Node.js", "Express.js", "MongoDB", "JWT", "RBAC"],
     github: "https://github.com/BalajiHariharan30",
-    live: null
+    live: "https://inventory-management-pcw8.vercel.app/"
   },
   portfolio: {
     title: "Personal Portfolio v2",
