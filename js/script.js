@@ -434,8 +434,8 @@ const projectDetails = {
   caresync: {
     title: "CareSync — AI Doctor Appointment System",
     date: "Feb – Apr 2026",
-    tags: "MERN Stack · Gemini AI · Telemedicine",
-    desc: "CareSync is a state-of-the-art healthcare orchestration system designed to streamline patient triaging, doctor availability, appointment scheduling, and remote healthcare consultations. It automates queue management and diagnoses priority routing using Google Gemini AI.",
+    tags: "MERN Stack · Gemini AI · Telemedicine · GitHub Actions",
+    desc: "CareSync is a state-of-the-art healthcare orchestration system designed to streamline patient triaging, doctor availability, appointment scheduling, and remote healthcare consultations. Designed optimized REST APIs reducing response time by 30%, integrated Google Gemini API cutting frontend load time by 40% using code splitting and lazy loading, and configured GitHub Actions CI/CD pipeline.",
     architecture: `
       <div class="diag-flow">
         <div class="diag-node"><strong>Client Dashboard</strong><br>(React + Vite)</div>
@@ -452,17 +452,18 @@ const projectDetails = {
       "<strong>AI-Powered Triage:</strong> Seamlessly analyzes patient symptom inputs to assign clinical urgency categories.",
       "<strong>Secure Authentication:</strong> Role-based access control (RBAC) separated for Patients, Doctors, and Administrators using JSON Web Tokens (JWT).",
       "<strong>Real-time Telemedicine:</strong> Integrated video and text chat interfaces for remote clinical appointments.",
-      "<strong>Queue Scheduling:</strong> Dynamic queue calculation which optimizes waiting times based on emergency levels."
+      "<strong>Performance Optimization:</strong> Code splitting and lazy loading reduced frontend load time by 40%, API design cut response times by 30%.",
+      "<strong>Automated CI/CD:</strong> GitHub Actions pipeline for build verification and continuous deployment to Vercel."
     ],
-    tech: ["React.js", "Node.js", "Express.js", "MongoDB", "Gemini AI", "JWT", "RBAC", "Vercel"],
+    tech: ["React.js", "Redux Toolkit", "Node.js", "Express.js", "MongoDB", "Gemini API", "JWT", "RBAC", "GitHub Actions", "Vercel"],
     github: "https://github.com/BalajiHariharan30",
     live: "https://care-sync-pro-lbel.vercel.app/"
   },
   inventory: {
-    title: "Inventory Management System",
+    title: "Inventory Management System (Stockflow)",
     date: "Dec 2025 – Feb 2026",
-    tags: "MERN Stack · Redux Toolkit · Security",
-    desc: "A production-grade supply chain tracking system built to manage warehouse stocks, vendor shipments, customer invoice cycles, and automatic re-ordering thresholds. It features strict audit logging and multi-warehouse visualization tools.",
+    tags: "MERN Stack · Redux Toolkit · Ant Design · Performance",
+    desc: "A production-grade supply chain tracking system built to manage product tracking and order management workflows. Reduced frontend load time by 20% using code splitting and lazy loading, with RESTful backend services using Express and MongoDB secured by JWT and RBAC.",
     architecture: `
       <div class="diag-flow">
         <div class="diag-node"><strong>Admin Dashboard</strong><br>(React + Ant Design)</div>
@@ -473,38 +474,60 @@ const projectDetails = {
       </div>
     `,
     features: [
-      "<strong>Warehouse Stock Tracking:</strong> Live status and count monitoring of products across multiple geographical locations.",
+      "<strong>Dynamic Product Tracking:</strong> Live status and count monitoring of products across order management cycles.",
       "<strong>Role-Based Audits:</strong> Granular RBAC allowing staff to log items while restricting approval controls to supervisors.",
       "<strong>Redux State Sync:</strong> Real-time caching and front-end synchronization using Redux Toolkit to prevent race conditions during updates.",
-      "<strong>Dynamic Reporting:</strong> Detailed dashboard charts indicating transaction frequencies, depletion warnings, and supply-chain efficiency."
+      "<strong>Performance Tuning:</strong> Strategic lazy loading cut frontend load times by 20%."
     ],
     tech: ["React.js", "Vite", "Redux Toolkit", "Ant Design", "Node.js", "Express.js", "MongoDB", "JWT", "RBAC"],
     github: "https://github.com/BalajiHariharan30",
     live: "https://inventory-management-pcw8.vercel.app/"
   },
+  od_approval: {
+    title: "OD Approval System",
+    date: "Oct – Dec 2025",
+    tags: "MERN Stack · Multi-Party Workflows · JWT/RBAC",
+    desc: "A full-stack clearance portal designed to streamline On-Duty approval workflows for students, mentors, and parents. Features role-based approval routing, reducing manual processing time and administrative overhead.",
+    architecture: `
+      <div class="diag-flow">
+        <div class="diag-node"><strong>Portal Interfaces</strong><br>(Student / Mentor / Parent)</div>
+        <div class="diag-arrow">Clearance Request</div>
+        <div class="diag-node"><strong>Approval Workflow API</strong><br>(Express + Node)</div>
+        <div class="diag-arrow">State Updates</div>
+        <div class="diag-node"><strong>Data Store</strong><br>(MongoDB)</div>
+      </div>
+    `,
+    features: [
+      "<strong>Multi-Party Approval:</strong> Multi-tiered approval workflow linking student requests directly to mentor review and parent notifications.",
+      "<strong>Role-Based Access Control:</strong> Secure role demarcation (Student, Mentor, Parent) backed by JWT auth.",
+      "<strong>Real-time Status Tracking:</strong> Live status indicators and transparent progress tracking across clearance stages.",
+      "<strong>Efficiency Gain:</strong> Significantly reduced paperwork and administrative processing time."
+    ],
+    tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT", "RBAC"],
+    github: "https://github.com/BalajiHariharan30"
+  },
   portfolio: {
     title: "Personal Portfolio v2",
     date: "2026",
     tags: "Vanilla JS · CSS Animations · Performance",
-    desc: "A highly optimized and aesthetic personal developer website. It features custom interactive particles, magnetic buttons, smooth scroll-reveal and responsive design. The contact form is fully integrated using AJAX directly to a secure email forwarder.",
+    desc: "A highly optimized personal developer portfolio site built with semantic HTML5, custom CSS animations, interactive particle canvas, light/dark themes, and modal components.",
     architecture: `
       <div class="diag-flow">
         <div class="diag-node"><strong>Static Site</strong><br>(HTML5 + CSS3 + JS)</div>
         <div class="diag-arrow">AJAX Fetch</div>
-        <div class="diag-node"><strong>Secure Handlers</strong><br>(Vite / Vercel Edge)</div>
-        <div class="diag-arrow">Web3Forms / API</div>
-        <div class="diag-node"><strong>User's Inbox</strong><br>(Email forwarding)</div>
+        <div class="diag-node"><strong>Web3Forms Handler</strong><br>(Email forwarding)</div>
+        <div class="diag-arrow">Inbox Notification</div>
+        <div class="diag-node"><strong>Balaji's Inbox</strong><br>(h.balaji1964@gmail.com)</div>
       </div>
     `,
     features: [
-      "<strong>Fluid Animations:</strong> Customized canvas particle rendering, magnetic hover effects, and section scroll reveal using Intersection Observer.",
-      "<strong>Interactive Chatbot:</strong> Custom AI Assistant integrated securely via Vercel serverless API routing using Gemini 1.5 Flash.",
-      "<strong>Light/Dark Mode:</strong> Highly optimized custom theme variable toggles without page flashes.",
-      "<strong>Fully Accessible & SEO Ready:</strong> Out-of-the-box support for high-quality Open Graph card previews, keyboard navigation, and semantic markers."
+      "<strong>Fluid Animations:</strong> Custom canvas particle system, magnetic hover effects, and smooth scroll reveal using Intersection Observer.",
+      "<strong>Interactive Modals:</strong> Dynamic project walkthrough modals with architecture diagrams and technical feature breakdowns.",
+      "<strong>Light/Dark Theme:</strong> Instant theme toggle without color flashes.",
+      "<strong>Fully Accessible & SEO Ready:</strong> Semantic HTML5 structure, custom Open Graph cards, and full keyboard navigation support."
     ],
-    tech: ["HTML5", "CSS3", "JavaScript", "Canvas API", "Intersection Observer", "Web3Forms API", "Vercel API"],
-    github: "https://github.com/BalajiHariharan30",
-    live: "https://balaji-portfolio-alpha.vercel.app/"
+    tech: ["HTML5", "CSS3", "JavaScript", "Canvas API", "Intersection Observer", "Web3Forms API"],
+    github: "https://github.com/BalajiHariharan30"
   }
 };
 
@@ -529,7 +552,8 @@ const projectDetails = {
       let key = '';
 
       if (titleText.includes('caresync')) key = 'caresync';
-      else if (titleText.includes('inventory')) key = 'inventory';
+      else if (titleText.includes('inventory') || titleText.includes('stockflow')) key = 'inventory';
+      else if (titleText.includes('od approval') || titleText.includes('on-duty')) key = 'od_approval';
       else if (titleText.includes('portfolio') || titleText.includes('website')) key = 'portfolio';
 
       const proj = projectDetails[key];
