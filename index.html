@@ -157,7 +157,7 @@
 
             <div class="hero-card-stats">
               <div class="stat">
-                <div class="stat-num">2+</div>
+                <div class="stat-num">3+</div>
                 <div class="stat-label">Projects</div>
               </div>
               <div class="stat">
@@ -273,6 +273,11 @@
       <div class="skills-grid" id="skillsGrid">
 
         <!-- Languages -->
+        <div class="skill-card lang reveal" style="transition-delay: 0.02s">
+          <span class="skill-icon">🟨</span>
+          <div class="skill-name">JavaScript</div>
+          <div class="skill-level">Advanced</div>
+        </div>
         <div class="skill-card lang reveal" style="transition-delay: 0.05s">
           <span class="skill-icon">☕</span>
           <div class="skill-name">Java</div>
@@ -350,22 +355,47 @@
         </div>
 
         <!-- Tools -->
+        <div class="skill-card tools reveal" style="transition-delay: 0.15s">
+          <span class="skill-icon">🔁</span>
+          <div class="skill-name">GitHub Actions</div>
+          <div class="skill-level">Intermediate</div>
+        </div>
+        <div class="skill-card tools reveal" style="transition-delay: 0.18s">
+          <span class="skill-icon">▲</span>
+          <div class="skill-name">Vercel</div>
+          <div class="skill-level">Proficient</div>
+        </div>
         <div class="skill-card tools reveal" style="transition-delay: 0.2s">
           <span class="skill-icon">🐙</span>
           <div class="skill-name">Git / GitHub</div>
           <div class="skill-level">Proficient</div>
         </div>
+        <div class="skill-card tools reveal" style="transition-delay: 0.22s">
+          <span class="skill-icon">🧪</span>
+          <div class="skill-name">Jest & Vitest</div>
+          <div class="skill-level">Intermediate</div>
+        </div>
         <div class="skill-card tools reveal" style="transition-delay: 0.25s">
+          <span class="skill-icon">⚡</span>
+          <div class="skill-name">Supertest</div>
+          <div class="skill-level">Intermediate</div>
+        </div>
+        <div class="skill-card tools frontend reveal" style="transition-delay: 0.28s">
+          <span class="skill-icon">🦅</span>
+          <div class="skill-name">RTL & jsdom</div>
+          <div class="skill-level">Intermediate</div>
+        </div>
+        <div class="skill-card tools reveal" style="transition-delay: 0.3s">
           <span class="skill-icon">📮</span>
           <div class="skill-name">Postman</div>
           <div class="skill-level">Proficient</div>
         </div>
-        <div class="skill-card tools reveal" style="transition-delay: 0.3s">
+        <div class="skill-card tools reveal" style="transition-delay: 0.35s">
           <span class="skill-icon">🤖</span>
           <div class="skill-name">Gemini API</div>
           <div class="skill-level">Intermediate</div>
         </div>
-        <div class="skill-card tools reveal" style="transition-delay: 0.35s">
+        <div class="skill-card tools reveal" style="transition-delay: 0.4s">
           <span class="skill-icon">🧠</span>
           <div class="skill-name">Agentic AI</div>
           <div class="skill-level">Intermediate</div>
@@ -454,7 +484,7 @@
             <div class="project-tag-floating" style="color: var(--cyan);">Dec 2025 – Feb 2026</div>
           </div>
           <div class="project-body">
-            <h3 class="project-name">Inventory Management System</h3>
+            <h3 class="project-name">Inventory Management System (Stockflow)</h3>
             <p class="project-desc">
               Scalable full-stack web application for product tracking and order cycle management,
               featuring secure JWT authentication and role-based access control.
@@ -487,14 +517,51 @@
           </div>
         </article>
 
-        <!-- Project 3: Portfolio -->
-        <article class="project-card reveal" data-tags="web" style="transition-delay: 0.2s">
+        <!-- Project 3: ReserveX -->
+        <article class="project-card reveal" data-tags="web backend" style="transition-delay: 0.2s">
+          <div class="project-preview" style="background: linear-gradient(135deg, #2e0f1a, #420f18);">
+            <div class="project-preview-grid"></div>
+            <div class="project-preview-bg">
+              <div class="project-preview-icon">🎟️</div>
+            </div>
+            <div class="project-number">03</div>
+            <div class="project-tag-floating" style="color: var(--violet);">Oct 2025 – Dec 2025</div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-name">ReserveX — Premium Ticket Booking Platform</h3>
+            <p class="project-desc">
+              MERN-based ticket booking platform with real-time seat locking via Socket.io and atomic concurrency control.
+              Features a custom promo engine, GPS-based location detection, and three-tier RBAC protection.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">React</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">Redux</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">Node.js</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">Express</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">MongoDB</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">Socket.io</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">JWT</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">RBAC</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/BalajiHariharan30" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="View ReserveX on GitHub">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 4: Portfolio -->
+        <article class="project-card reveal" data-tags="web" style="transition-delay: 0.25s">
           <div class="project-preview" style="background: linear-gradient(135deg, #0f2418, #1a2010);">
             <div class="project-preview-grid"></div>
             <div class="project-preview-bg">
               <div class="project-preview-icon">🌐</div>
             </div>
-            <div class="project-number">03</div>
+            <div class="project-number">04</div>
             <div class="project-tag-floating" style="color: var(--emerald);">2026</div>
           </div>
           <div class="project-body">
@@ -561,7 +628,7 @@
         <div class="timeline-item reveal" style="transition-delay: 0.1s">
           <div class="timeline-dot"></div>
           <time class="timeline-date" datetime="2025-12">Dec 2025 – Feb 2026</time>
-          <h3 class="timeline-title">Inventory Management System</h3>
+          <h3 class="timeline-title">Inventory Management System (Stockflow)</h3>
           <div class="timeline-org">Full Stack Developer · Personal Project</div>
           <div class="timeline-content">
             <ul>
@@ -569,6 +636,21 @@
               <li>Architected backend services using Node.js and Express with MongoDB for product tracking and order cycle management</li>
               <li>Implemented secure JWT authentication and role-based access control (RBAC) to protect sensitive data</li>
               <li>Designed and optimized RESTful APIs with strict server-side validation to ensure reliable data processing</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Item 2.5: ReserveX -->
+        <div class="timeline-item reveal" style="transition-delay: 0.15s">
+          <div class="timeline-dot"></div>
+          <time class="timeline-date" datetime="2025-10">Oct 2025 – Dec 2025</time>
+          <h3 class="timeline-title">ReserveX — Premium Ticket Booking Platform</h3>
+          <div class="timeline-org">Full Stack Developer · Personal Project</div>
+          <div class="timeline-content">
+            <ul>
+              <li>Built a MERN ticket booking platform with real-time seat locking via Socket.io and atomic concurrency control to prevent double-bookings</li>
+              <li>Implemented three-tier RBAC (User, Manager, Admin) with secured REST APIs, a custom promo engine, and Recharts-based analytics dashboards</li>
+              <li>Designed a responsive, glassmorphic UI with Google Sign-In, GPS-based location detection, and UPI QR code checkout</li>
             </ul>
           </div>
         </div>
@@ -581,11 +663,12 @@
           <div class="timeline-org">Bannari Amman Institute of Technology</div>
           <div class="timeline-content">
             <ul>
+              <li>Winner, SRM TechSpectrum '25 — recognized for full-stack project excellence</li>
               <li>Mentored 50+ students in React programming and Java fundamentals</li>
               <li>Improved departmental technical proficiency and coding practices</li>
+              <li>Served as Event Head for LEO-FEST and AURA'25, leading end-to-end technical operations including logistics, AV/technical setup, and cross-team coordination</li>
               <li>Runner-up in Paper Presentation at STROMZ 2K24</li>
               <li>Presented project proposal at VISAI 2023, Vel Tech Madras</li>
-              <li>Directed logistics and technical coordination for LEO-FEST &amp; AURA'24</li>
             </ul>
           </div>
         </div>
@@ -631,7 +714,14 @@
             <div class="cert-issuer">Oracle · Verified</div>
           </div>
         </div>
-        <div class="cert-card reveal" style="transition-delay: 0.05s">
+        <div class="cert-card reveal" style="transition-delay: 0.04s">
+          <div class="cert-icon">💻</div>
+          <div>
+            <div class="cert-name">Full Stack Development</div>
+            <div class="cert-issuer">GUVI x HCL · Verified</div>
+          </div>
+        </div>
+        <div class="cert-card reveal" style="transition-delay: 0.06s">
           <div class="cert-icon">🏆</div>
           <div>
             <div class="cert-name">Frontend Developer (React)</div>
@@ -641,21 +731,21 @@
         <div class="cert-card reveal" style="transition-delay: 0.1s">
           <div class="cert-icon">🌐</div>
           <div>
-            <div class="cert-name">JavaScript (Intermediate)</div>
+            <div class="cert-name">JavaScript</div>
             <div class="cert-issuer">HackerRank · Verified</div>
           </div>
         </div>
         <div class="cert-card reveal" style="transition-delay: 0.15s">
           <div class="cert-icon">🥈</div>
           <div>
-            <div class="cert-name">REST API (Intermediate)</div>
+            <div class="cert-name">REST API</div>
             <div class="cert-issuer">HackerRank · Verified</div>
           </div>
         </div>
         <div class="cert-card reveal" style="transition-delay: 0.2s">
           <div class="cert-icon">🟢</div>
           <div>
-            <div class="cert-name">Node.js (Intermediate)</div>
+            <div class="cert-name">Node.js</div>
             <div class="cert-issuer">HackerRank · Verified</div>
           </div>
         </div>

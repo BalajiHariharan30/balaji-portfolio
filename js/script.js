@@ -459,7 +459,7 @@ const projectDetails = {
     live: "https://care-sync-pro-lbel.vercel.app/"
   },
   inventory: {
-    title: "Inventory Management System",
+    title: "Inventory Management System (Stockflow)",
     date: "Dec 2025 – Feb 2026",
     tags: "MERN Stack · Redux Toolkit · Security",
     desc: "A production-grade supply chain tracking system built to manage warehouse stocks, vendor shipments, customer invoice cycles, and automatic re-ordering thresholds. It features strict audit logging and multi-warehouse visualization tools.",
@@ -481,6 +481,30 @@ const projectDetails = {
     tech: ["React.js", "Vite", "Redux Toolkit", "Ant Design", "Node.js", "Express.js", "MongoDB", "JWT", "RBAC"],
     github: "https://github.com/BalajiHariharan30",
     live: "https://inventory-management-pcw8.vercel.app/"
+  },
+  reservex: {
+    title: "ReserveX — Premium Ticket Booking Platform",
+    date: "Oct – Dec 2025",
+    tags: "MERN Stack · Socket.io · Concurrency",
+    desc: "ReserveX is a high-performance ticket booking platform built with the MERN stack. It handles high-concurrency event ticket purchases, preventing double-booking anomalies using custom MongoDB transactions and Socket.io real-time seat status synchronization.",
+    architecture: `
+      <div class="diag-flow">
+        <div class="diag-node"><strong>Client View</strong><br>(React + Redux)</div>
+        <div class="diag-arrow">WebSocket Sync</div>
+        <div class="diag-node"><strong>Booking Gateway</strong><br>(Node + Express)</div>
+        <div class="diag-arrow">Atomic Lock</div>
+        <div class="diag-node"><strong>Seat Database</strong><br>(MongoDB)</div>
+      </div>
+    `,
+    features: [
+      "<strong>Real-Time Seat Locking:</strong> Immediate synchronization of seat reservation status using Socket.io to prevent ticket race conditions.",
+      "<strong>Granular Access Controls:</strong> Secure three-tier RBAC for Users, Managers, and Administrators to manage events and user levels.",
+      "<strong>GPS & UPI Integrations:</strong> Location-based event suggestions and a simulated UPI dynamic QR code check-out sequence.",
+      "<strong>Analytics Dashboards:</strong> Beautiful data rendering showing ticket sale metrics, peak hours, and coupon conversion using Recharts."
+    ],
+    tech: ["React.js", "Redux", "Node.js", "Express.js", "MongoDB", "Socket.io", "JWT", "RBAC"],
+    github: "https://github.com/BalajiHariharan30",
+    live: ""
   },
   portfolio: {
     title: "Personal Portfolio v2",
@@ -529,7 +553,8 @@ const projectDetails = {
       let key = '';
 
       if (titleText.includes('caresync')) key = 'caresync';
-      else if (titleText.includes('inventory')) key = 'inventory';
+      else if (titleText.includes('inventory') || titleText.includes('stockflow')) key = 'inventory';
+      else if (titleText.includes('reservex')) key = 'reservex';
       else if (titleText.includes('portfolio') || titleText.includes('website')) key = 'portfolio';
 
       const proj = projectDetails[key];
