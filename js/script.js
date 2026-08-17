@@ -13,59 +13,40 @@
   window.addEventListener('scroll', () => {
     const scrollTop  = window.scrollY;
     const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.width  = (docHeight > 0 ? (scrollTop / docHeight * 100) : 0) + '%';
+    bar.style.width  = (scrollTop / docHeight * 100) + '%';
   }, { passive: true });
 })();
 
 
-/* ===================== PRELOADER (Instant load without artificial delay) ===================== */
+/* ===================== PRELOADER ===================== */
 (function initPreloader() {
-  const preloader = document.getElementById('preloader');
-  if (!preloader) return;
-
-  function hidePreloader() {
-    if (!preloader.classList.contains('hidden')) {
-      preloader.classList.add('hidden');
-    }
-  }
-
-  if (document.readyState === 'complete') {
-    setTimeout(hidePreloader, 100);
-  } else {
-    window.addEventListener('load', () => {
-      setTimeout(hidePreloader, 150);
-    });
-    // Fallback safety
-    setTimeout(hidePreloader, 1000);
-  }
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const preloader = document.getElementById('preloader');
+      if (preloader) preloader.classList.add('hidden');
+    }, 2000);
+  });
 })();
 
 
 /* ===================== CUSTOM CURSOR ===================== */
 (function initCursor() {
-  const cursor     = document.getElementById('cursor');
+  const cursor    = document.getElementById('cursor');
   const cursorRing = document.getElementById('cursorRing');
   if (!cursor || !cursorRing) return;
 
-  if (window.matchMedia('(hover: none), (prefers-reduced-motion: reduce)').matches) {
-    cursor.style.display = 'none';
-    cursorRing.style.display = 'none';
-    return;
-  }
-
-  let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-  let ringX = mouseX, ringY = mouseY;
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
 
   document.addEventListener('mousemove', e => {
     mouseX = e.clientX;
     mouseY = e.clientY;
     cursor.style.left = mouseX + 'px';
     cursor.style.top  = mouseY + 'px';
-  }, { passive: true });
+  });
 
   function animateRing() {
-    ringX += (mouseX - ringX) * 0.22;
-    ringY += (mouseY - ringY) * 0.22;
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
     cursorRing.style.left = ringX + 'px';
     cursorRing.style.top  = ringY + 'px';
     requestAnimationFrame(animateRing);
@@ -74,16 +55,12 @@
 })();
 
 
-/* ===================== PARTICLES CANVAS (With IntersectionObserver Pausing) ===================== */
+/* ===================== PARTICLES CANVAS ===================== */
 (function initParticles() {
   const canvas = document.getElementById('particles');
   if (!canvas) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
   const ctx = canvas.getContext('2d');
   let W, H, particles = [];
-  let isHeroVisible = true;
-  let animationFrameId = null;
 
   function resize() {
     W = canvas.width  = window.innerWidth;
@@ -92,8 +69,8 @@
   resize();
   window.addEventListener('resize', resize);
 
-  const particleCount = window.innerWidth < 768 ? 30 : 60;
-  for (let i = 0; i < particleCount; i++) {
+  // Generate 80 random particles
+  for (let i = 0; i < 80; i++) {
     particles.push({
       x:       Math.random() * W,
       y:       Math.random() * H,
@@ -106,85 +83,54 @@
   }
 
   function drawParticles() {
-    if (!isHeroVisible) return;
     ctx.clearRect(0, 0, W, H);
 
     particles.forEach((p, i) => {
+      // Move
       p.x += p.vx;
       p.y += p.vy;
-
+      // Wrap edges
       if (p.x < 0) p.x = W;
       if (p.x > W) p.x = 0;
       if (p.y < 0) p.y = H;
       if (p.y > H) p.y = 0;
 
+      // Draw dot
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
       ctx.fillStyle  = p.color;
       ctx.globalAlpha = p.opacity;
       ctx.fill();
 
-      for (let j = i + 1; j < particles.length; j++) {
-        const p2   = particles[j];
+      // Connect nearby particles
+      particles.slice(i + 1).forEach(p2 => {
         const dx   = p.x - p2.x;
         const dy   = p.y - p2.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 100) {
+        if (dist < 120) {
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(p2.x, p2.y);
           ctx.strokeStyle  = '#63B3ED';
-          ctx.globalAlpha  = (1 - dist / 100) * 0.08;
+          ctx.globalAlpha  = (1 - dist / 120) * 0.08;
           ctx.lineWidth    = 0.5;
           ctx.stroke();
         }
-      }
+      });
     });
 
-    animationFrameId = requestAnimationFrame(drawParticles);
+    requestAnimationFrame(drawParticles);
   }
-
-  const heroEl = document.getElementById('hero');
-  if (heroEl) {
-    const observer = new IntersectionObserver(entries => {
-      isHeroVisible = entries[0].isIntersecting;
-      if (isHeroVisible) {
-        if (!animationFrameId) drawParticles();
-      } else {
-        cancelAnimationFrame(animationFrameId);
-        animationFrameId = null;
-      }
-    }, { threshold: 0.05 });
-    observer.observe(heroEl);
-  } else {
-    drawParticles();
-  }
+  drawParticles();
 })();
 
 
-/* ===================== SMART NAVIGATION HIDE/SHOW ON SCROLL ===================== */
-(function initSmartNav() {
+/* ===================== NAVIGATION SCROLL EFFECT ===================== */
+(function initNavScroll() {
   const nav = document.getElementById('nav');
   if (!nav) return;
-
-  let lastScrollY = window.scrollY;
-  const threshold = 8;
-
   window.addEventListener('scroll', () => {
-    const currentScrollY = window.scrollY;
-    nav.classList.toggle('scrolled', currentScrollY > 50);
-
-    if (currentScrollY > 160) {
-      if (currentScrollY > lastScrollY + threshold) {
-        nav.classList.add('nav-hidden');
-      } else if (currentScrollY < lastScrollY - threshold) {
-        nav.classList.remove('nav-hidden');
-      }
-    } else {
-      nav.classList.remove('nav-hidden');
-    }
-
-    lastScrollY = currentScrollY;
+    nav.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
 })();
 
@@ -250,52 +196,16 @@
 })();
 
 
-/* ===================== BIOTECH-TO-CODE SCRAMBLE ANIMATION ===================== */
-(function initScramble() {
-  const scrambleEls = document.querySelectorAll('.scramble-text');
-  const chars = 'ATGC0101#@%&{}<>/';
-
-  function runScramble(el) {
-    const target = el.dataset.original || el.innerText;
-    let iteration = 0;
-    const interval = setInterval(() => {
-      el.innerText = target.split('').map((char, index) => {
-        if (index < iteration) return target[index];
-        return chars[Math.floor(Math.random() * chars.length)];
-      }).join('');
-
-      if (iteration >= target.length) {
-        clearInterval(interval);
-      }
-      iteration += 1 / 3;
-    }, 45);
-  }
-
-  scrambleEls.forEach(el => {
-    el.addEventListener('mouseenter', () => runScramble(el));
-
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        runScramble(el);
-        observer.disconnect();
-      }
-    }, { threshold: 0.5 });
-    observer.observe(el);
-  });
-})();
-
-
 /* ===================== HERO CARD 3D TILT ===================== */
 (function initHeroTilt() {
   const heroCard = document.getElementById('heroCard');
   if (!heroCard) return;
-  if (window.matchMedia('(hover: none), (prefers-reduced-motion: reduce)').matches) return;
 
   heroCard.addEventListener('mousemove', e => {
     const rect = heroCard.getBoundingClientRect();
     const x    = (e.clientX - rect.left)  / rect.width  - 0.5;
     const y    = (e.clientY - rect.top)   / rect.height - 0.5;
-    heroCard.style.transform = `perspective(600px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
+    heroCard.style.transform = `perspective(600px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg)`;
   });
 
   heroCard.addEventListener('mouseleave', () => {
@@ -313,48 +223,24 @@
         entry.target.classList.add('visible');
       }
     });
-  }, { threshold: 0.08 });
+  }, { threshold: 0.1 });
 
   revealEls.forEach(el => observer.observe(el));
 })();
 
 
-/* ===================== SKILLS & PROJECTS FILTER ===================== */
-(function initFilters() {
-  // Skills filter
+/* ===================== SKILLS FILTER ===================== */
+(function initSkillsFilter() {
   document.querySelectorAll('.cat-pill').forEach(pill => {
     pill.addEventListener('click', () => {
       document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
 
       const filter = pill.dataset.filter;
-      document.querySelectorAll('.skill-card').forEach((card, index) => {
+      document.querySelectorAll('.skill-card').forEach(card => {
         const match = filter === 'all' || card.classList.contains(filter);
         if (match) {
           card.style.display = '';
-          card.style.animationDelay = `${index * 0.03}s`;
-          card.classList.add('fade-in');
-        } else {
-          card.style.display = 'none';
-          card.classList.remove('fade-in');
-        }
-      });
-    });
-  });
-
-  // Projects filter
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const filter = btn.dataset.filter;
-      document.querySelectorAll('.project-card').forEach((card, index) => {
-        const tags = card.dataset.tags || '';
-        const match = filter === 'all' || tags.includes(filter);
-        if (match) {
-          card.style.display = '';
-          card.style.animationDelay = `${index * 0.04}s`;
           card.classList.add('fade-in');
         } else {
           card.style.display = 'none';
@@ -406,70 +292,18 @@
 })();
 
 
-/* ===================== SCROLL-LINKED TIMELINE PROGRESS ===================== */
-(function initTimelineProgress() {
-  const timeline = document.querySelector('.timeline');
-  if (!timeline) return;
-
-  let progress = timeline.querySelector('.timeline-progress');
-  if (!progress) {
-    progress = document.createElement('div');
-    progress.className = 'timeline-progress';
-    timeline.prepend(progress);
-  }
-
-  function updateTimeline() {
-    const rect = timeline.getBoundingClientRect();
-    const windowH = window.innerHeight;
-    if (rect.top < windowH && rect.bottom > 0) {
-      const visible = windowH - rect.top;
-      const total = rect.height;
-      const pct = Math.min(Math.max((visible / total) * 100, 0), 100);
-      progress.style.height = pct + '%';
-    }
-  }
-
-  window.addEventListener('scroll', updateTimeline, { passive: true });
-  updateTimeline();
-})();
-
-
-/* ===================== ONE-CLICK EMAIL COPY WITH TOAST ===================== */
-(function initEmailCopy() {
-  const copyBtn = document.getElementById('emailCopyBtn');
-  const badge   = document.getElementById('copyBadge');
-  if (!copyBtn || !badge) return;
-
-  copyBtn.addEventListener('click', async () => {
-    const email = 'h.balaji1964@gmail.com';
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(email);
-      } else {
-        const textArea = document.createElement('textarea');
-        textArea.value = email;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-      }
-      copyBtn.classList.add('copied');
-      badge.textContent = 'Copied! ✓';
-      setTimeout(() => {
-        copyBtn.classList.remove('copied');
-        badge.textContent = 'Copy';
-      }, 2500);
-    } catch (err) {
-      console.warn('Clipboard write failed, opening mailto:', err);
-      window.location.href = 'mailto:' + email;
-    }
-  });
-
-  copyBtn.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      copyBtn.click();
-    }
+/* ===================== MAGNETIC BUTTONS ===================== */
+(function initMagneticButtons() {
+  document.querySelectorAll('.btn-primary, .btn-secondary, .nav-cta').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const rect = btn.getBoundingClientRect();
+      const x    = (e.clientX - rect.left - rect.width  / 2) * 0.25;
+      const y    = (e.clientY - rect.top  - rect.height / 2) * 0.25;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
   });
 })();
 
@@ -605,27 +439,13 @@ const projectDetails = {
     architecture: `
       <div class="diag-flow">
         <div class="diag-node"><strong>Client Dashboard</strong><br>(React + Vite)</div>
-        <div class="diag-svg-arrow">
-          <span class="diag-label">API Requests</span>
-          <svg class="flow-svg" viewBox="0 0 100 12" preserveAspectRatio="none">
-            <line x1="0" y1="6" x2="88" y2="6" class="flow-line" />
-            <polygon points="88,2 98,6 88,10" fill="var(--cyan)" />
-          </svg>
-        </div>
+        <div class="diag-arrow">API Requests</div>
         <div class="diag-node"><strong>Express Router</strong><br>(Node Backend)</div>
-        <div class="diag-svg-arrow">
-          <span class="diag-label">Auth & Data</span>
-          <svg class="flow-svg" viewBox="0 0 100 12" preserveAspectRatio="none">
-            <line x1="0" y1="6" x2="88" y2="6" class="flow-line" />
-            <polygon points="88,2 98,6 88,10" fill="var(--cyan)" />
-          </svg>
-        </div>
+        <div class="diag-arrow">Auth Verification</div>
         <div class="diag-node"><strong>Data Storage</strong><br>(MongoDB Cluster)</div>
       </div>
-      <div class="diag-flow" style="justify-content: center; margin-top: 16px;">
-        <div class="diag-node" style="border-color: var(--violet);">
-          <strong style="color: var(--violet-bright);">AI Triage Engine</strong><br>(Google Gemini API)
-        </div>
+      <div class="diag-flow" style="justify-content: center; margin-top: 20px;">
+        <div class="diag-node" style="border-color: var(--violet);"><strong>AI Triage System</strong><br>(Google Gemini API)</div>
       </div>
     `,
     features: [
@@ -639,28 +459,16 @@ const projectDetails = {
     live: "https://care-sync-pro-lbel.vercel.app/"
   },
   inventory: {
-    title: "InsightOps / Inventory Management System (Stockflow)",
-    date: "Mar – Apr 2026",
+    title: "Inventory Management System (Stockflow)",
+    date: "Dec 2025 – Feb 2026",
     tags: "MERN Stack · Redux Toolkit · Security",
     desc: "A production-grade supply chain tracking system built to manage warehouse stocks, vendor shipments, customer invoice cycles, and automatic re-ordering thresholds. It features strict audit logging and multi-warehouse visualization tools.",
     architecture: `
       <div class="diag-flow">
         <div class="diag-node"><strong>Admin Dashboard</strong><br>(React + Ant Design)</div>
-        <div class="diag-svg-arrow">
-          <span class="diag-label">Redux Actions</span>
-          <svg class="flow-svg" viewBox="0 0 100 12" preserveAspectRatio="none">
-            <line x1="0" y1="6" x2="88" y2="6" class="flow-line" />
-            <polygon points="88,2 98,6 88,10" fill="var(--cyan)" />
-          </svg>
-        </div>
+        <div class="diag-arrow">Redux Actions</div>
         <div class="diag-node"><strong>Inventory API</strong><br>(Node + Express)</div>
-        <div class="diag-svg-arrow">
-          <span class="diag-label">Validation</span>
-          <svg class="flow-svg" viewBox="0 0 100 12" preserveAspectRatio="none">
-            <line x1="0" y1="6" x2="88" y2="6" class="flow-line" />
-            <polygon points="88,2 98,6 88,10" fill="var(--cyan)" />
-          </svg>
-        </div>
+        <div class="diag-arrow">Transaction Validation</div>
         <div class="diag-node"><strong>DB Stores</strong><br>(MongoDB)</div>
       </div>
     `,
@@ -682,21 +490,9 @@ const projectDetails = {
     architecture: `
       <div class="diag-flow">
         <div class="diag-node"><strong>Client View</strong><br>(React + Redux)</div>
-        <div class="diag-svg-arrow">
-          <span class="diag-label">WebSocket Sync</span>
-          <svg class="flow-svg" viewBox="0 0 100 12" preserveAspectRatio="none">
-            <line x1="0" y1="6" x2="88" y2="6" class="flow-line" />
-            <polygon points="88,2 98,6 88,10" fill="var(--cyan)" />
-          </svg>
-        </div>
+        <div class="diag-arrow">WebSocket Sync</div>
         <div class="diag-node"><strong>Booking Gateway</strong><br>(Node + Express)</div>
-        <div class="diag-svg-arrow">
-          <span class="diag-label">Atomic Lock</span>
-          <svg class="flow-svg" viewBox="0 0 100 12" preserveAspectRatio="none">
-            <line x1="0" y1="6" x2="88" y2="6" class="flow-line" />
-            <polygon points="88,2 98,6 88,10" fill="var(--cyan)" />
-          </svg>
-        </div>
+        <div class="diag-arrow">Atomic Lock</div>
         <div class="diag-node"><strong>Seat Database</strong><br>(MongoDB)</div>
       </div>
     `,
@@ -717,32 +513,20 @@ const projectDetails = {
     desc: "A highly optimized and aesthetic personal developer website. It features custom interactive particles, magnetic buttons, smooth scroll-reveal and responsive design. The contact form is fully integrated using AJAX directly to a secure email forwarder.",
     architecture: `
       <div class="diag-flow">
-        <div class="diag-node"><strong>Static UI</strong><br>(HTML5 + CSS3 + JS)</div>
-        <div class="diag-svg-arrow">
-          <span class="diag-label">AJAX Fetch</span>
-          <svg class="flow-svg" viewBox="0 0 100 12" preserveAspectRatio="none">
-            <line x1="0" y1="6" x2="88" y2="6" class="flow-line" />
-            <polygon points="88,2 98,6 88,10" fill="var(--cyan)" />
-          </svg>
-        </div>
-        <div class="diag-node"><strong>Edge Handlers</strong><br>(Vercel Edge)</div>
-        <div class="diag-svg-arrow">
-          <span class="diag-label">API Relay</span>
-          <svg class="flow-svg" viewBox="0 0 100 12" preserveAspectRatio="none">
-            <line x1="0" y1="6" x2="88" y2="6" class="flow-line" />
-            <polygon points="88,2 98,6 88,10" fill="var(--cyan)" />
-          </svg>
-        </div>
-        <div class="diag-node"><strong>Inbox</strong><br>(Forwarding)</div>
+        <div class="diag-node"><strong>Static Site</strong><br>(HTML5 + CSS3 + JS)</div>
+        <div class="diag-arrow">AJAX Fetch</div>
+        <div class="diag-node"><strong>Secure Handlers</strong><br>(Vite / Vercel Edge)</div>
+        <div class="diag-arrow">Web3Forms / API</div>
+        <div class="diag-node"><strong>User's Inbox</strong><br>(Email forwarding)</div>
       </div>
     `,
     features: [
       "<strong>Fluid Animations:</strong> Customized canvas particle rendering, magnetic hover effects, and section scroll reveal using Intersection Observer.",
-      "<strong>Interactive Systems:</strong> Biotech-to-code scramblers, smart hiding sticky nav, and dynamic data pulse SVG diagrams.",
+      "<strong>Interactive Chatbot:</strong> Custom AI Assistant integrated securely via Vercel serverless API routing using Gemini 1.5 Flash.",
       "<strong>Light/Dark Mode:</strong> Highly optimized custom theme variable toggles without page flashes.",
-      "<strong>Fully Accessible & SEO Ready:</strong> Meets WCAG AA contrast guidelines, prefers-reduced-motion compatibility, and semantic markers."
+      "<strong>Fully Accessible & SEO Ready:</strong> Out-of-the-box support for high-quality Open Graph card previews, keyboard navigation, and semantic markers."
     ],
-    tech: ["HTML5", "CSS3", "JavaScript", "Canvas API", "Intersection Observer", "Web3Forms API", "Vercel Edge"],
+    tech: ["HTML5", "CSS3", "JavaScript", "Canvas API", "Intersection Observer", "Web3Forms API", "Vercel API"],
     github: "https://github.com/BalajiHariharan30",
     live: "https://balaji-portfolio-alpha.vercel.app/"
   }
