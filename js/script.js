@@ -636,11 +636,10 @@ const projectDetails = {
 
   if (!modal || !backdrop || !closeBtn || !modalBody) return;
 
-  // Add click listeners to all project cards
+  // Add click and keyboard listeners to all project cards
   document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('click', e => {
-      // Prevent opening modal if user clicked GitHub/Live demo links inside the card
-      if (e.target.closest('a')) return;
+    function openCardModal(e) {
+      if (e && e.target && e.target.closest('a')) return;
 
       const titleEl = card.querySelector('.project-name');
       if (!titleEl) return;
@@ -706,7 +705,7 @@ const projectDetails = {
     card.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        openCardModal();
+        openCardModal(e);
       }
     });
   });
