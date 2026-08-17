@@ -332,31 +332,19 @@
 })();
 
 
-/* ===================== SCROLL-LINKED TIMELINE PROGRESS ===================== */
-(function initTimelineProgress() {
-  const timeline = document.querySelector('.timeline');
-  if (!timeline) return;
-
-  let progress = timeline.querySelector('.timeline-progress');
-  if (!progress) {
-    progress = document.createElement('div');
-    progress.className = 'timeline-progress';
-    timeline.prepend(progress);
-  }
-
-  function updateTimeline() {
-    const rect = timeline.getBoundingClientRect();
-    const windowH = window.innerHeight;
-    if (rect.top < windowH && rect.bottom > 0) {
-      const visible = windowH - rect.top;
-      const total = rect.height;
-      const pct = Math.min(Math.max((visible / total) * 100, 0), 100);
-      progress.style.height = pct + '%';
-    }
-  }
-
-  window.addEventListener('scroll', updateTimeline, { passive: true });
-  updateTimeline();
+/* ===================== PROJECT CARD 3D TILT ===================== */
+(function initProjectTilt() {
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x    = (e.clientX - rect.left) / rect.width  - 0.5;
+      const y    = (e.clientY - rect.top)  / rect.height - 0.5;
+      card.style.transform = `translateY(-8px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
 })();
 
 
