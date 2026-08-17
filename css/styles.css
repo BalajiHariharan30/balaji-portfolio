@@ -354,6 +354,25 @@ nav.scrolled {
 
 .mobile-menu a:hover { color: var(--text-primary); }
 
+.mobile-menu a.mobile-cta {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--cyan);
+  border: 1.5px solid var(--cyan);
+  padding: 12px 32px;
+  border-radius: var(--radius-sm);
+  margin-top: 10px;
+  -webkit-text-fill-color: var(--cyan);
+  text-align: center;
+}
+
+.mobile-menu a.mobile-cta:hover {
+  background: rgba(99, 179, 237, 0.1);
+  box-shadow: 0 0 25px rgba(99, 179, 237, 0.25);
+  color: var(--cyan);
+}
+
 /* ===================== SECTIONS BASE ===================== */
 section { position: relative; z-index: 1; }
 
