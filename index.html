@@ -9,7 +9,6 @@
   <meta name="description" content="Balaji H — Full Stack Developer, MERN Stack Engineer, AI Enthusiast. Building scalable web applications with modern technologies." />
   <meta name="keywords" content="Balaji H, Full Stack Developer, MERN Stack, React, Node.js, Portfolio, Web Development" />
   <meta name="author" content="Balaji H" />
-  <link rel="canonical" href="https://balaji-portfolio-alpha.vercel.app/" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -69,12 +68,12 @@
       <li><a href="#contact"    data-num="05">Contact</a></li>
     </ul>
 
-    <!-- FIXED: Resume now uses correct relative path and accessible label -->
-    <a href="assets/resume.pdf" class="nav-cta" target="_blank" rel="noopener noreferrer" aria-label="Open Balaji H's Resume PDF in new tab" title="View or Download Balaji H's Resume">
+    <!-- FIXED: Resume now uses correct relative path -->
+    <a href="assets/resume.pdf" class="nav-cta" target="_blank" rel="noopener noreferrer">
       Resume ↗
     </a>
 
-    <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobileMenu">
+    <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
       <span></span>
       <span></span>
       <span></span>
@@ -82,13 +81,13 @@
   </nav>
 
   <!-- ===== MOBILE MENU ===== -->
-  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobile navigation" aria-hidden="true">
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
     <a href="#about"      class="mobile-link">About</a>
     <a href="#skills"     class="mobile-link">Skills</a>
     <a href="#projects"   class="mobile-link">Projects</a>
     <a href="#experience" class="mobile-link">Experience</a>
     <a href="#contact"    class="mobile-link">Contact</a>
-    <a href="assets/resume.pdf" class="mobile-link mobile-cta" target="_blank" rel="noopener noreferrer" aria-label="Open Balaji H's Resume PDF">Resume ↗</a>
+    <a href="assets/resume.pdf" class="mobile-link mobile-cta" target="_blank" rel="noopener noreferrer">Resume ↗</a>
   </div>
 
   <!-- ============================================================
@@ -442,22 +441,22 @@
       </div>
 
       <!-- Filter buttons -->
-      <div class="projects-filters" role="group" aria-label="Filter projects by category">
-        <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
-        <button class="filter-btn" data-filter="web" aria-pressed="false">Full-Stack / Web</button>
-        <button class="filter-btn" data-filter="ai" aria-pressed="false">AI &amp; Automation</button>
-        <button class="filter-btn" data-filter="backend" aria-pressed="false">Backend &amp; Cloud</button>
+      <div class="projects-filters reveal" style="transition-delay: 0.1s" role="group" aria-label="Filter projects by type">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="web">Web Apps</button>
+        <button class="filter-btn" data-filter="ai">AI Powered</button>
+        <button class="filter-btn" data-filter="backend">Backend</button>
       </div>
 
       <div class="projects-grid">
 
         <!-- Project 1: CareSync -->
-        <article class="project-card reveal" data-tags="web ai backend" style="transition-delay: 0.1s" tabindex="0" role="button" aria-label="View CareSync project details" data-project="caresync">
+        <article class="project-card reveal" data-tags="web ai backend" style="transition-delay: 0.1s">
           <div class="project-preview">
             <img src="assets/images/caresync-logo.jpg" class="project-preview-img" alt="CareSync Logo">
             <div class="project-preview-grid"></div>
             <div class="project-number">01</div>
-            <div class="project-tag-floating" style="color: var(--violet);"><span class="live-dot" aria-hidden="true"></span>Live on Vercel</div>
+            <div class="project-tag-floating" style="color: var(--violet);">May – June 2026</div>
           </div>
           <div class="project-body">
             <h3 class="project-name">CareSync — AI Doctor Appointment</h3>
@@ -494,12 +493,12 @@
         </article>
 
         <!-- Project 2: InsightOps -->
-        <article class="project-card reveal" data-tags="web ai backend" style="transition-delay: 0.15s" tabindex="0" role="button" aria-label="View InsightOps project details" data-project="inventory">
+        <article class="project-card reveal" data-tags="web ai backend" style="transition-delay: 0.15s">
           <div class="project-preview">
             <img src="assets/images/insightops-logo.jpg" class="project-preview-img" alt="InsightOps Logo">
             <div class="project-preview-grid"></div>
             <div class="project-number">02</div>
-            <div class="project-tag-floating" style="color: var(--cyan);"><span class="live-dot" aria-hidden="true"></span>Live on Vercel</div>
+            <div class="project-tag-floating" style="color: var(--cyan);">Mar – Apr 2026</div>
           </div>
           <div class="project-body">
             <h3 class="project-name">InsightOps — AI Inventory &amp; Expense</h3>
@@ -959,10 +958,10 @@
 
 
   <!-- ===== PROJECT DETAIL MODAL ===== -->
-  <div class="project-modal" id="projectModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Project details modal">
-    <div class="project-modal-backdrop" id="projectModalBackdrop" tabindex="-1"></div>
+  <div class="project-modal" id="projectModal" role="dialog" aria-hidden="true">
+    <div class="project-modal-backdrop" id="projectModalBackdrop"></div>
     <div class="project-modal-content">
-      <button class="project-modal-close" id="projectModalClose" aria-label="Close project details">&times;</button>
+      <button class="project-modal-close" id="projectModalClose" aria-label="Close modal">&times;</button>
       <div id="projectModalBody">
         <!-- Content will be injected dynamically by JS -->
       </div>
