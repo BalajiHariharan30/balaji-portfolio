@@ -46,7 +46,7 @@ html {
   /* Typography colours */
   --text-primary:   #F0F4FF;
   --text-secondary: #8892B0;
-  --text-muted:     #4A5568;
+  --text-muted:     #94A3B8;
 
   /* Font families */
   --font-display: 'Syne', sans-serif;
@@ -222,7 +222,12 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: var(--transition);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s, padding 0.3s, border-color 0.3s;
+  will-change: transform;
+}
+
+nav.nav-hidden {
+  transform: translateY(-100%);
 }
 
 nav.scrolled {
@@ -1317,12 +1322,47 @@ section { position: relative; z-index: 1; }
   text-decoration: none;
   color: var(--text-primary);
   transition: var(--transition);
+  position: relative;
 }
 
 .contact-link-item:hover {
   border-color: var(--cyan);
   background: rgba(99, 179, 237, 0.05);
   transform: translateX(4px);
+}
+
+.email-copy-item {
+  cursor: pointer;
+  user-select: none;
+}
+
+.copy-badge {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  background: rgba(99, 179, 237, 0.1);
+  border: 1px solid rgba(99, 179, 237, 0.3);
+  color: var(--cyan);
+  transition: var(--transition);
+}
+
+.email-copy-item:hover .copy-badge {
+  background: rgba(99, 179, 237, 0.2);
+  transform: scale(1.05);
+}
+
+.email-copy-item.copied {
+  border-color: var(--emerald) !important;
+  background: rgba(104, 211, 145, 0.08) !important;
+}
+
+.email-copy-item.copied .copy-badge {
+  background: var(--emerald);
+  color: var(--bg);
+  border-color: var(--emerald);
+  font-weight: 700;
 }
 
 .contact-link-icon {
@@ -1530,6 +1570,19 @@ body.light {
 /* Disable custom cursor on mobile/touch screens */
 @media (max-width: 900px), (hover: none) {
   .cursor, .cursor-ring {
+    display: none !important;
+  }
+}
+
+/* ===================== REDUCED MOTION ACCESSIBILITY ===================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  #particles, .hero-orbit, .cursor, .cursor-ring, .blob {
     display: none !important;
   }
 }
