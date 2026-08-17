@@ -18,25 +18,14 @@
 })();
 
 
-/* ===================== PRELOADER (Instant load without artificial delay) ===================== */
+/* ===================== PRELOADER ===================== */
 (function initPreloader() {
-  const preloader = document.getElementById('preloader');
-  if (!preloader) return;
-
-  function hidePreloader() {
-    if (!preloader.classList.contains('hidden')) {
-      preloader.classList.add('hidden');
-    }
-  }
-
-  if (document.readyState === 'complete') {
-    setTimeout(hidePreloader, 100);
-  } else {
-    window.addEventListener('load', () => {
-      setTimeout(hidePreloader, 150);
-    });
-    setTimeout(hidePreloader, 1000);
-  }
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const preloader = document.getElementById('preloader');
+      if (preloader) preloader.classList.add('hidden');
+    }, 2000);
+  });
 })();
 
 
@@ -46,12 +35,6 @@
   const cursorRing = document.getElementById('cursorRing');
   if (!cursor || !cursorRing) return;
 
-  if (window.matchMedia('(hover: none), (prefers-reduced-motion: reduce)').matches) {
-    cursor.style.display = 'none';
-    cursorRing.style.display = 'none';
-    return;
-  }
-
   let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
 
   document.addEventListener('mousemove', e => {
@@ -59,11 +42,11 @@
     mouseY = e.clientY;
     cursor.style.left = mouseX + 'px';
     cursor.style.top  = mouseY + 'px';
-  }, { passive: true });
+  });
 
   function animateRing() {
-    ringX += (mouseX - ringX) * 0.18;
-    ringY += (mouseY - ringY) * 0.18;
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
     cursorRing.style.left = ringX + 'px';
     cursorRing.style.top  = ringY + 'px';
     requestAnimationFrame(animateRing);
@@ -72,16 +55,12 @@
 })();
 
 
-/* ===================== PARTICLES CANVAS (With IntersectionObserver Pausing) ===================== */
+/* ===================== PARTICLES CANVAS ===================== */
 (function initParticles() {
   const canvas = document.getElementById('particles');
   if (!canvas) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
   const ctx = canvas.getContext('2d');
   let W, H, particles = [];
-  let isHeroVisible = true;
-  let animationFrameId = null;
 
   function resize() {
     W = canvas.width  = window.innerWidth;
@@ -90,9 +69,8 @@
   resize();
   window.addEventListener('resize', resize);
 
-  // Generate 60 lightweight particles (optimized for battery & frame rates)
-  const particleCount = window.innerWidth < 768 ? 30 : 60;
-  for (let i = 0; i < particleCount; i++) {
+  // Generate 80 random particles
+  for (let i = 0; i < 80; i++) {
     particles.push({
       x:       Math.random() * W,
       y:       Math.random() * H,
@@ -105,88 +83,54 @@
   }
 
   function drawParticles() {
-    if (!isHeroVisible) return;
     ctx.clearRect(0, 0, W, H);
 
     particles.forEach((p, i) => {
+      // Move
       p.x += p.vx;
       p.y += p.vy;
-
+      // Wrap edges
       if (p.x < 0) p.x = W;
       if (p.x > W) p.x = 0;
       if (p.y < 0) p.y = H;
       if (p.y > H) p.y = 0;
 
+      // Draw dot
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
       ctx.fillStyle  = p.color;
       ctx.globalAlpha = p.opacity;
       ctx.fill();
 
-      // Connect nearby particles within 100px
-      for (let j = i + 1; j < particles.length; j++) {
-        const p2   = particles[j];
+      // Connect nearby particles
+      particles.slice(i + 1).forEach(p2 => {
         const dx   = p.x - p2.x;
         const dy   = p.y - p2.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 100) {
+        if (dist < 120) {
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(p2.x, p2.y);
           ctx.strokeStyle  = '#63B3ED';
-          ctx.globalAlpha  = (1 - dist / 100) * 0.08;
+          ctx.globalAlpha  = (1 - dist / 120) * 0.08;
           ctx.lineWidth    = 0.5;
           ctx.stroke();
         }
-      }
+      });
     });
 
-    animationFrameId = requestAnimationFrame(drawParticles);
+    requestAnimationFrame(drawParticles);
   }
-
-  // Observe Hero visibility to freeze loop when scrolled down
-  const heroEl = document.getElementById('hero');
-  if (heroEl) {
-    const observer = new IntersectionObserver(entries => {
-      isHeroVisible = entries[0].isIntersecting;
-      if (isHeroVisible) {
-        if (!animationFrameId) drawParticles();
-      } else {
-        cancelAnimationFrame(animationFrameId);
-        animationFrameId = null;
-      }
-    }, { threshold: 0.05 });
-    observer.observe(heroEl);
-  } else {
-    drawParticles();
-  }
+  drawParticles();
 })();
 
 
-/* ===================== SMART NAVIGATION HIDE/SHOW ON SCROLL ===================== */
+/* ===================== NAVIGATION SCROLL EFFECT ===================== */
 (function initNavScroll() {
   const nav = document.getElementById('nav');
   if (!nav) return;
-
-  let lastScrollY = window.scrollY;
-  const threshold = 8;
-
   window.addEventListener('scroll', () => {
-    const currentScrollY = window.scrollY;
-    nav.classList.toggle('scrolled', currentScrollY > 50);
-
-    // Hide on scroll down, show on scroll up
-    if (currentScrollY > 160) {
-      if (currentScrollY > lastScrollY + threshold) {
-        nav.classList.add('nav-hidden');
-      } else if (currentScrollY < lastScrollY - threshold) {
-        nav.classList.remove('nav-hidden');
-      }
-    } else {
-      nav.classList.remove('nav-hidden');
-    }
-
-    lastScrollY = currentScrollY;
+    nav.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
 })();
 
@@ -285,20 +229,18 @@
 })();
 
 
-/* ===================== SKILLS & PROJECTS FILTER ===================== */
-(function initFilters() {
-  // Skills filter
+/* ===================== SKILLS FILTER ===================== */
+(function initSkillsFilter() {
   document.querySelectorAll('.cat-pill').forEach(pill => {
     pill.addEventListener('click', () => {
       document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
 
       const filter = pill.dataset.filter;
-      document.querySelectorAll('.skill-card').forEach((card, index) => {
+      document.querySelectorAll('.skill-card').forEach(card => {
         const match = filter === 'all' || card.classList.contains(filter);
         if (match) {
           card.style.display = '';
-          card.style.animationDelay = `${index * 0.03}s`;
           card.classList.add('fade-in');
         } else {
           card.style.display = 'none';
@@ -307,20 +249,22 @@
       });
     });
   });
+})();
 
-  // Projects filter
+
+/* ===================== PROJECTS FILTER ===================== */
+(function initProjectsFilter() {
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
       const filter = btn.dataset.filter;
-      document.querySelectorAll('.project-card').forEach((card, index) => {
+      document.querySelectorAll('.project-card').forEach(card => {
         const tags = card.dataset.tags || '';
         const match = filter === 'all' || tags.includes(filter);
         if (match) {
           card.style.display = '';
-          card.style.animationDelay = `${index * 0.04}s`;
           card.classList.add('fade-in');
         } else {
           card.style.display = 'none';
@@ -348,42 +292,18 @@
 })();
 
 
-/* ===================== ONE-CLICK EMAIL COPY WITH TOAST ===================== */
-(function initEmailCopy() {
-  const copyBtn = document.getElementById('emailCopyBtn');
-  const badge   = document.getElementById('copyBadge');
-  if (!copyBtn || !badge) return;
-
-  copyBtn.addEventListener('click', async () => {
-    const email = 'h.balaji1964@gmail.com';
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(email);
-      } else {
-        const textArea = document.createElement('textarea');
-        textArea.value = email;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-      }
-      copyBtn.classList.add('copied');
-      badge.textContent = 'Copied! ✓';
-      setTimeout(() => {
-        copyBtn.classList.remove('copied');
-        badge.textContent = 'Copy';
-      }, 2500);
-    } catch (err) {
-      console.warn('Clipboard write failed, opening mailto:', err);
-      window.location.href = 'mailto:' + email;
-    }
-  });
-
-  copyBtn.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      copyBtn.click();
-    }
+/* ===================== MAGNETIC BUTTONS ===================== */
+(function initMagneticButtons() {
+  document.querySelectorAll('.btn-primary, .btn-secondary, .nav-cta').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const rect = btn.getBoundingClientRect();
+      const x    = (e.clientX - rect.left - rect.width  / 2) * 0.25;
+      const y    = (e.clientY - rect.top  - rect.height / 2) * 0.25;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
   });
 })();
 
