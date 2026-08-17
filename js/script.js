@@ -311,8 +311,12 @@
   // Projects filter
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
 
       const filter = btn.dataset.filter;
       document.querySelectorAll('.project-card').forEach((card, index) => {
@@ -416,7 +420,7 @@
 
     const btn        = form.querySelector('.form-submit');
     const originalText = btn.innerHTML;
-    btn.textContent  = 'Sending…';
+    btn.innerHTML    = '<svg class="submit-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor"></path></svg> Sending…';
     btn.disabled     = true;
 
     const accessKeyInput = form.querySelector('input[name="access_key"]');
@@ -693,16 +697,34 @@ const projectDetails = {
 
       // Open modal
       modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden'; // prevent background scrolling
+      closeBtn.focus();
+    }
+
+    card.addEventListener('click', openCardModal);
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openCardModal();
+      }
     });
   });
 
   // Close modal events
   function closeModal() {
     modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   }
 
   closeBtn.addEventListener('click', closeModal);
   backdrop.addEventListener('click', closeModal);
+
+  // Global Escape key listener for modal closing
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) {
+      closeModal();
+    }
+  });
 })();
