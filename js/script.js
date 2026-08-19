@@ -371,7 +371,7 @@
   if (!copyBtn || !badge) return;
 
   copyBtn.addEventListener('click', async () => {
-    const email = 'h.balaji1964@gmail.com';
+    const email = 'balaji.hdev@gmail.com';
     try {
       if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(email);

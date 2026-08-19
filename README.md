@@ -9,7 +9,7 @@ A premium, fully responsive personal portfolio website built with **semantic HTM
 **Balaji H** — Full Stack Developer | MERN Stack Engineer | AI Enthusiast  
 B.Tech Biotechnology student at Bannari Amman Institute of Technology (Graduating 2026)
 
-📧 h.balaji1964@gmail.com  
+📧 balaji.hdev@gmail.com  
 🔗 [linkedin.com/in/balaji-h](https://www.linkedin.com/in/balaji-h-a15845267?utm_source=share_via&utm_content=profile&utm_medium=member_ios)  
 🐙 [github.com/BalajiHariharan30](https://github.com/BalajiHariharan30)  
 📍 Trichy, Tamil Nadu, India
