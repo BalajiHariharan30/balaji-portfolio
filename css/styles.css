@@ -334,7 +334,8 @@ nav.scrolled {
 .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 .mobile-menu {
-  display: none;
+  /* display:flex is forced by new animation CSS via !important */
+  display: none; /* fallback for non-JS */
   position: fixed;
   inset: 0;
   background: rgba(5, 8, 16, 0.97);
@@ -346,7 +347,9 @@ nav.scrolled {
   gap: 40px;
 }
 
+/* Kept for non-animated fallback — new animation block (display:flex !important) overrides */
 .mobile-menu.open { display: flex; }
+
 
 .mobile-menu a {
   font-family: var(--font-display);
@@ -1867,4 +1870,157 @@ body.light {
   background: var(--border);
   border-radius: 3px;
 }
+
+/* =====================================================================
+   ANIMATION UPGRADES — All 12 new animations
+   ===================================================================== */
+
+/* ===================== #1 — HERO STAGGERED ENTRY ===================== */
+@keyframes heroFadeSlideUp {
+  from { opacity: 0; transform: translateY(36px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow.reveal { animation: heroFadeSlideUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both; }
+.hero-name.reveal    { animation: heroFadeSlideUp 0.70s cubic-bezier(0.22, 1, 0.36, 1) 0.32s both; }
+.hero-roles.reveal   { animation: heroFadeSlideUp 0.70s cubic-bezier(0.22, 1, 0.36, 1) 0.50s both; }
+.hero-desc.reveal    { animation: heroFadeSlideUp 0.70s cubic-bezier(0.22, 1, 0.36, 1) 0.65s both; }
+.hero-ctas.reveal    { animation: heroFadeSlideUp 0.70s cubic-bezier(0.22, 1, 0.36, 1) 0.80s both; }
+
+/* Once IntersectionObserver marks visible, cancel stagger so it never re-runs */
+.hero-eyebrow.reveal.visible,
+.hero-name.reveal.visible,
+.hero-roles.reveal.visible,
+.hero-desc.reveal.visible,
+.hero-ctas.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: none;
+}
+
+
+/* ===================== #3 — SKILL ICON BOUNCE ON HOVER ===================== */
+@keyframes iconBounce {
+  0%   { transform: scale(1)    rotate(0deg);  }
+  30%  { transform: scale(1.40) rotate(-8deg); }
+  60%  { transform: scale(0.88) rotate(4deg);  }
+  80%  { transform: scale(1.12) rotate(-2deg); }
+  100% { transform: scale(1)    rotate(0deg);  }
+}
+
+.skill-card:hover .skill-icon {
+  display: inline-block;
+  animation: iconBounce 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+
+/* ===================== #8 — HERO CARD FLOATING BOB ===================== */
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-14px); }
+}
+
+.hero-visual {
+  animation: heroFloat 5.5s ease-in-out infinite;
+}
+
+/* Pause float while user tilts the card */
+.hero-visual:hover {
+  animation-play-state: paused;
+}
+
+
+/* ===================== #9 — PAGE TRANSITION SWEEP ===================== */
+.page-wipe {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #63B3ED, #B794F4);
+  z-index: 9998;
+  pointer-events: none;
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+@keyframes sweepIn {
+  from { transform: scaleX(0); transform-origin: left; }
+  to   { transform: scaleX(1); transform-origin: left; }
+}
+@keyframes sweepOut {
+  from { transform: scaleX(1); transform-origin: right; }
+  to   { transform: scaleX(0); transform-origin: right; }
+}
+
+.page-wipe.sweep-in  { animation: sweepIn  0.35s cubic-bezier(0.77, 0, 0.18, 1) forwards; }
+.page-wipe.sweep-out { animation: sweepOut 0.35s cubic-bezier(0.77, 0, 0.18, 1) forwards; }
+
+
+/* ===================== #10 — CURSOR SPOTLIGHT GLOW ===================== */
+.cursor-spotlight {
+  position: fixed;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99,179,237,0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  will-change: left, top;
+  transition: opacity 0.4s ease;
+}
+
+
+/* ===================== #11 — TIMELINE DOT PULSE ===================== */
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 0 0   rgba(99, 179, 237, 0.7), 0 0 20px rgba(99, 179, 237, 0.5); }
+  50%       { box-shadow: 0 0 0 10px rgba(99, 179, 237, 0),   0 0 20px rgba(99, 179, 237, 0.5); }
+}
+
+@keyframes dotPulseViolet {
+  0%, 100% { box-shadow: 0 0 0 0   rgba(183, 148, 244, 0.7), 0 0 20px rgba(183, 148, 244, 0.5); }
+  50%       { box-shadow: 0 0 0 10px rgba(183, 148, 244, 0),   0 0 20px rgba(183, 148, 244, 0.5); }
+}
+
+.timeline-dot        { animation: dotPulse       2.4s ease-in-out infinite; }
+.timeline-dot.violet { animation: dotPulseViolet 2.4s ease-in-out infinite; }
+
+
+/* ===================== #12 — SMOOTH MOBILE MENU SLIDE-IN ===================== */
+/* Switch from display:flex toggle to visibility+opacity for animation */
+.mobile-menu {
+  display: flex !important;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-18px) scale(0.97);
+  transition:
+    opacity   0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0.32s;
+  pointer-events: none;
+}
+
+.mobile-menu.open {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition:
+    opacity   0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0s;
+  pointer-events: auto;
+}
+
+/* Stagger each mobile menu link */
+.mobile-menu a {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.3s ease, transform 0.3s ease, color var(--transition);
+}
+
+.mobile-menu.open a:nth-child(1) { opacity:1; transform:translateY(0); transition-delay:0.06s; }
+.mobile-menu.open a:nth-child(2) { opacity:1; transform:translateY(0); transition-delay:0.12s; }
+.mobile-menu.open a:nth-child(3) { opacity:1; transform:translateY(0); transition-delay:0.18s; }
+.mobile-menu.open a:nth-child(4) { opacity:1; transform:translateY(0); transition-delay:0.24s; }
+.mobile-menu.open a:nth-child(5) { opacity:1; transform:translateY(0); transition-delay:0.30s; }
+.mobile-menu.open a:nth-child(6) { opacity:1; transform:translateY(0); transition-delay:0.36s; }
+
 

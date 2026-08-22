@@ -198,8 +198,10 @@
   if (!hamburger || !mobileMenu) return;
 
   hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    mobileMenu.classList.toggle('open');
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('active', isOpen);
+    mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+    hamburger.setAttribute('aria-expanded', String(isOpen));
   });
 
   // Close menu on any mobile link click
@@ -207,9 +209,12 @@
     link.addEventListener('click', () => {
       hamburger.classList.remove('active');
       mobileMenu.classList.remove('open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      hamburger.setAttribute('aria-expanded', 'false');
     });
   });
 })();
+
 
 
 /* ===================== TYPEWRITER EFFECT ===================== */
@@ -727,3 +732,211 @@ const projectDetails = {
     }
   });
 })();
+
+
+/* ===================== #2 — MAGNETIC BUTTONS ===================== */
+(function initMagneticButtons() {
+  if (window.matchMedia('(hover: none)').matches) return;
+
+  document.querySelectorAll('.btn-primary, .btn-secondary, .nav-cta').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const rect = btn.getBoundingClientRect();
+      const x = (e.clientX - rect.left - rect.width  / 2) * 0.28;
+      const y = (e.clientY - rect.top  - rect.height / 2) * 0.28;
+      btn.style.transform = `translate(${x}px, ${y}px) scale(1.04)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transition = 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
+      btn.style.transform  = '';
+      setTimeout(() => { btn.style.transition = ''; }, 400);
+    });
+  });
+})();
+
+
+/* ===================== #4 — SCROLL BLOB HUE SHIFT ===================== */
+(function initBlobHueShift() {
+  const blob1 = document.querySelector('.blob-1');
+  const blob2 = document.querySelector('.blob-2');
+  if (!blob1 || !blob2) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    const hue = Math.round(pct * 80);
+    blob1.style.filter = `blur(100px) hue-rotate(${hue}deg)`;
+    blob2.style.filter = `blur(100px) hue-rotate(${-hue * 0.6}deg)`;
+  }, { passive: true });
+})();
+
+
+/* ===================== #5 — SECTION TITLE TEXT SCRAMBLE ===================== */
+(function initTextScramble() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const chars = '!@#$%&ABCDEFabcdef01234';
+
+  function scramble(el) {
+    if (el.dataset.scrambling) return;
+    el.dataset.scrambling = '1';
+    const target = el.dataset.original || el.textContent;
+    el.dataset.original = target;
+    let iteration = 0;
+
+    const interval = setInterval(() => {
+      el.textContent = target.split('').map((char, i) => {
+        if (char === ' ' || char === '\n') return char;
+        if (i < Math.floor(iteration)) return char;
+        return chars[Math.floor(Math.random() * chars.length)];
+      }).join('');
+
+      iteration += 0.5;
+      if (iteration >= target.length) {
+        el.textContent = target;
+        delete el.dataset.scrambling;
+        clearInterval(interval);
+      }
+    }, 28);
+  }
+
+  const titleObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        scramble(entry.target);
+        titleObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.6 });
+
+  document.querySelectorAll('.section-title').forEach(el => titleObserver.observe(el));
+})();
+
+
+/* ===================== #6 — PROJECT CARD 3D TILT ===================== */
+(function initProjectTilt() {
+  if (window.matchMedia('(hover: none)').matches) return;
+
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.style.transition = 'transform 0.1s ease';
+    });
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left)  / rect.width  - 0.5;
+      const y = (e.clientY - rect.top)   / rect.height - 0.5;
+      card.style.transform = `perspective(900px) rotateY(${x * 9}deg) rotateX(${-y * 9}deg) translateY(-6px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s, box-shadow 0.3s';
+      card.style.transform  = '';
+      setTimeout(() => { card.style.transition = ''; }, 500);
+    });
+  });
+})();
+
+
+/* ===================== #7 — COUNTING STATS ANIMATION ===================== */
+(function initCountingStats() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const statEls = document.querySelectorAll('.stat-num');
+  if (!statEls.length) return;
+
+  function animateCount(el) {
+    const raw      = el.textContent.trim();
+    const suffix   = raw.replace(/[\d.]/g, '');
+    const target   = parseFloat(raw);
+    const isFloat  = raw.includes('.');
+    const duration = 1200;
+    const startTime = performance.now();
+
+    function step(now) {
+      const elapsed  = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease     = 1 - Math.pow(1 - progress, 3);
+      const value    = target * ease;
+      el.textContent = (isFloat ? value.toFixed(1) : Math.floor(value)) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  const statObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCount(entry.target);
+        statObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.8 });
+
+  statEls.forEach(el => statObserver.observe(el));
+})();
+
+
+/* ===================== #9 — PAGE TRANSITION SWEEP ===================== */
+(function initPageSweep() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const wipe = document.createElement('div');
+  wipe.className = 'page-wipe';
+  document.body.appendChild(wipe);
+
+  function doSweep(targetEl, navHeight) {
+    wipe.classList.add('sweep-in');
+    wipe.addEventListener('animationend', function onIn() {
+      wipe.removeEventListener('animationend', onIn);
+      window.scrollTo({
+        top: targetEl.getBoundingClientRect().top + window.scrollY - navHeight - 20,
+        behavior: 'instant'
+      });
+      wipe.classList.remove('sweep-in');
+      wipe.classList.add('sweep-out');
+      wipe.addEventListener('animationend', function onOut() {
+        wipe.classList.remove('sweep-out');
+      }, { once: true });
+    }, { once: true });
+  }
+
+  // Attach to nav and mobile menu anchor links only
+  document.querySelectorAll('nav a[href^="#"], .mobile-menu a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const id     = link.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      const navH = document.getElementById('nav')?.offsetHeight || 0;
+      doSweep(target, navH);
+    });
+  });
+})();
+
+
+/* ===================== #10 — CURSOR SPOTLIGHT GLOW ===================== */
+(function initCursorSpotlight() {
+  if (window.matchMedia('(hover: none), (prefers-reduced-motion: reduce)').matches) return;
+
+  const spotlight = document.createElement('div');
+  spotlight.className = 'cursor-spotlight';
+  document.body.appendChild(spotlight);
+
+  let targetX = window.innerWidth / 2;
+  let targetY = window.innerHeight / 2;
+  let curX = targetX;
+  let curY = targetY;
+
+  document.addEventListener('mousemove', e => {
+    targetX = e.clientX;
+    targetY = e.clientY;
+  }, { passive: true });
+
+  (function animateSpotlight() {
+    curX += (targetX - curX) * 0.08;
+    curY += (targetY - curY) * 0.08;
+    spotlight.style.left = curX + 'px';
+    spotlight.style.top  = curY + 'px';
+    requestAnimationFrame(animateSpotlight);
+  })();
+})();
+
