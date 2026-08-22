@@ -25,13 +25,18 @@
   <meta property="twitter:description" content="Performance-driven Full Stack Developer building MERN applications and intelligent web systems." />
   <meta property="twitter:image" content="https://balaji-portfolio-alpha.vercel.app/assets/images/og-preview.png" />
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts — preconnect + preload critical weights -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- Preload the two most-used font faces to avoid FOUT -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@0,400;0,500&family=JetBrains+Mono:wght@400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" /></noscript>
 
-  <!-- Main Stylesheet -->
+  <!-- Main Stylesheet — preload for faster render -->
+  <link rel="preload" href="css/styles.css" as="style" />
   <link rel="stylesheet" href="css/styles.css" />
+
 </head>
 <body>
 
@@ -192,18 +197,38 @@
     <div class="container">
       <div class="about-grid">
 
-        <!-- Visual monogram block -->
+        <!-- Visual identity card — no photo, fully animated -->
         <div class="about-image-wrap reveal-left" aria-hidden="true">
-          <div class="about-image-inner">
-            <div class="about-image-fill">
-              <div class="about-monogram">BH</div>
+          <div class="about-identity-card">
+            <!-- Rotating border glow -->
+            <div class="about-card-glow"></div>
+            <!-- Orbit rings -->
+            <div class="about-orbit about-orbit-1"><div class="about-orbit-dot" style="background:var(--cyan);box-shadow:0 0 10px var(--cyan)"></div></div>
+            <div class="about-orbit about-orbit-2"><div class="about-orbit-dot" style="background:var(--violet);box-shadow:0 0 10px var(--violet)"></div></div>
+            <!-- Avatar -->
+            <div class="about-avatar">BH</div>
+            <div class="about-card-name">Balaji H</div>
+            <div class="about-card-role">Full Stack Developer</div>
+            <!-- Skill pills -->
+            <div class="about-card-pills">
+              <span class="about-pill">⚛️ React</span>
+              <span class="about-pill">🟢 Node.js</span>
+              <span class="about-pill">🍃 MongoDB</span>
+              <span class="about-pill">🤖 Gemini AI</span>
+            </div>
+            <!-- Status bar -->
+            <div class="about-card-status">
+              <span class="live-dot" style="width:8px;height:8px;margin-right:8px;"></span>
+              Open to opportunities
             </div>
           </div>
+          <!-- Badge -->
           <div class="about-badge">
             <div class="badge-num">2026</div>
             <div class="badge-label">Graduated</div>
           </div>
         </div>
+
 
         <!-- Text content -->
         <div class="about-content reveal-right">
@@ -449,12 +474,20 @@
         <button class="filter-btn" data-filter="backend" aria-pressed="false">Backend &amp; Cloud</button>
       </div>
 
+      <!-- Mobile swipe hint -->
+      <div class="mobile-swipe-hint" aria-hidden="true">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Swipe to browse
+      </div>
+
+      <!-- Projects grid / mobile carousel wrapper -->
+      <div class="projects-carousel-wrap">
       <div class="projects-grid">
 
         <!-- Project 1: CareSync -->
         <article class="project-card reveal" data-tags="web ai backend" style="transition-delay: 0.1s" tabindex="0" role="button" aria-label="View CareSync project details" data-project="caresync">
           <div class="project-preview">
-            <img src="assets/images/caresync-logo.jpg" class="project-preview-img" alt="CareSync Logo">
+            <img src="assets/images/caresync-logo.jpg" class="project-preview-img" loading="lazy" decoding="async" alt="CareSync Logo">
             <div class="project-preview-grid"></div>
             <div class="project-number">01</div>
             <div class="project-tag-floating" style="color: var(--violet);"><span class="live-dot" aria-hidden="true"></span>Live on Vercel</div>
@@ -496,7 +529,7 @@
         <!-- Project 2: InsightOps -->
         <article class="project-card reveal" data-tags="web ai backend" style="transition-delay: 0.15s" tabindex="0" role="button" aria-label="View InsightOps project details" data-project="inventory">
           <div class="project-preview">
-            <img src="assets/images/insightops-logo.jpg" class="project-preview-img" alt="InsightOps Logo">
+            <img src="assets/images/insightops-logo.jpg" class="project-preview-img" loading="lazy" decoding="async" alt="InsightOps Logo">
             <div class="project-preview-grid"></div>
             <div class="project-number">02</div>
             <div class="project-tag-floating" style="color: var(--cyan);"><span class="live-dot" aria-hidden="true"></span>Live on Vercel</div>
@@ -538,7 +571,7 @@
         <!-- Project 3: ReserveX -->
         <article class="project-card reveal" data-tags="web backend" style="transition-delay: 0.2s">
           <div class="project-preview">
-            <img src="assets/images/reservex-logo.jpg" class="project-preview-img" alt="ReserveX Logo">
+            <img src="assets/images/reservex-logo.jpg" class="project-preview-img" loading="lazy" decoding="async" alt="ReserveX Logo">
             <div class="project-preview-grid"></div>
             <div class="project-number">03</div>
             <div class="project-tag-floating" style="color: var(--violet);">Oct – Dec 2025</div>
@@ -573,7 +606,7 @@
         <!-- Project 4: Inventory Management -->
         <article class="project-card reveal" data-tags="web backend" style="transition-delay: 0.25s" tabindex="0" role="button" aria-label="View Inventory Management System project details" data-project="inventory">
           <div class="project-preview">
-            <img src="assets/images/inventory-logo.jpg" class="project-preview-img" alt="Inventory Management Logo">
+            <img src="assets/images/inventory-logo.jpg" class="project-preview-img" loading="lazy" decoding="async" alt="Inventory Management Logo">
             <div class="project-preview-grid"></div>
             <div class="project-number">04</div>
             <div class="project-tag-floating" style="color: var(--cyan);"><span class="live-dot" aria-hidden="true"></span>Live on Vercel</div>
@@ -646,8 +679,10 @@
         </article>
 
       </div><!-- .projects-grid -->
+      </div><!-- .projects-carousel-wrap -->
     </div>
   </section>
+
 
   <div class="section-divider"></div>
 
