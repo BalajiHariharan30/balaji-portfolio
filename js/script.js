@@ -770,47 +770,6 @@ const projectDetails = {
 })();
 
 
-/* ===================== #5 — SECTION TITLE TEXT SCRAMBLE ===================== */
-(function initTextScramble() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  const chars = '!@#$%&ABCDEFabcdef01234';
-
-  function scramble(el) {
-    if (el.dataset.scrambling) return;
-    el.dataset.scrambling = '1';
-    const target = el.dataset.original || el.textContent;
-    el.dataset.original = target;
-    let iteration = 0;
-
-    const interval = setInterval(() => {
-      el.textContent = target.split('').map((char, i) => {
-        if (char === ' ' || char === '\n') return char;
-        if (i < Math.floor(iteration)) return char;
-        return chars[Math.floor(Math.random() * chars.length)];
-      }).join('');
-
-      iteration += 0.5;
-      if (iteration >= target.length) {
-        el.textContent = target;
-        delete el.dataset.scrambling;
-        clearInterval(interval);
-      }
-    }, 28);
-  }
-
-  const titleObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        scramble(entry.target);
-        titleObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.6 });
-
-  document.querySelectorAll('.section-title').forEach(el => titleObserver.observe(el));
-})();
-
 
 /* ===================== #6 — PROJECT CARD 3D TILT ===================== */
 (function initProjectTilt() {
