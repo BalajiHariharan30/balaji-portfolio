@@ -71,12 +71,13 @@
       <li><a href="#skills"     data-num="02">Skills</a></li>
       <li><a href="#projects"   data-num="03">Projects</a></li>
       <li><a href="#experience" data-num="04">Experience</a></li>
-      <li><a href="#contact"    data-num="05">Contact</a></li>
+      <li><a href="#resume"     data-num="05">Resume</a></li>
+      <li><a href="#contact"    data-num="06">Contact</a></li>
     </ul>
 
-    <!-- FIXED: Resume now uses correct relative path and accessible label -->
-    <a href="assets/resume.pdf" class="nav-cta" target="_blank" rel="noopener noreferrer" aria-label="Open Balaji H's Resume PDF in new tab" title="View or Download Balaji H's Resume">
-      Resume ↗
+    <!-- Resume nav button: scroll to interactive viewer with direct fallback -->
+    <a href="#resume" class="nav-cta" aria-label="View Balaji H's Resume" title="View or Download Balaji H's Resume">
+      Resume 📄
     </a>
 
     <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -92,8 +93,9 @@
     <a href="#skills"     class="mobile-link">Skills</a>
     <a href="#projects"   class="mobile-link">Projects</a>
     <a href="#experience" class="mobile-link">Experience</a>
+    <a href="#resume"     class="mobile-link">Resume</a>
     <a href="#contact"    class="mobile-link">Contact</a>
-    <a href="assets/resume.pdf" class="mobile-link mobile-cta" target="_blank" rel="noopener noreferrer" aria-label="Open Balaji H's Resume PDF">Resume ↗</a>
+    <a href="assets/resume.pdf" class="mobile-link mobile-cta" target="_blank" download="Balaji_H_Resume.pdf" aria-label="Download Balaji H's Resume PDF">Download Resume ⬇</a>
   </div>
 
   <!-- ============================================================
@@ -687,9 +689,24 @@
 
       <div class="timeline">
 
-        <!-- Item 1: CareSync -->
+        <!-- Item 1: Internship at Codomax -->
         <div class="timeline-item reveal">
           <div class="timeline-dot violet"></div>
+          <time class="timeline-date" datetime="2026-07">July 2026 – Aug 2026</time>
+          <h3 class="timeline-title">Software Engineer Intern (Full-Stack Development)</h3>
+          <div class="timeline-org">Codomax Digital Solutions</div>
+          <div class="timeline-content">
+            <ul>
+              <li>Built full-stack features for a Hospital Management System using React.js, Node.js/Express, and MongoDB, including JWT authentication and RBAC for secure data access</li>
+              <li>Developed REST APIs and integrated AI-powered features to automate workflows and enhance user experience</li>
+              <li>Transitioned from a Biotechnology background into full-stack development, applying core CS fundamentals across frontend, backend, and database layers</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Item 2: CareSync -->
+        <div class="timeline-item reveal" style="transition-delay: 0.05s">
+          <div class="timeline-dot"></div>
           <time class="timeline-date" datetime="2026-05">May 2026 – June 2026</time>
           <h3 class="timeline-title">CareSync — AI Doctor Appointment System</h3>
           <div class="timeline-org">Full Stack Developer · Personal Project</div>
@@ -703,8 +720,8 @@
           </div>
         </div>
 
-        <!-- Item 2: InsightOps -->
-        <div class="timeline-item reveal" style="transition-delay: 0.05s">
+        <!-- Item 3: InsightOps -->
+        <div class="timeline-item reveal" style="transition-delay: 0.1s">
           <div class="timeline-dot"></div>
           <time class="timeline-date" datetime="2026-03">March 2026 – April 2026</time>
           <h3 class="timeline-title">InsightOps — AI-Powered Inventory &amp; Expense Management Platform</h3>
@@ -720,8 +737,8 @@
           </div>
         </div>
 
-        <!-- Item 3: ReserveX -->
-        <div class="timeline-item reveal" style="transition-delay: 0.1s">
+        <!-- Item 4: ReserveX -->
+        <div class="timeline-item reveal" style="transition-delay: 0.15s">
           <div class="timeline-dot"></div>
           <time class="timeline-date" datetime="2025-10">Oct 2025 – Dec 2025</time>
           <h3 class="timeline-title">ReserveX — Premium Ticket Booking Platform</h3>
@@ -731,22 +748,6 @@
               <li>Built a MERN ticket booking platform with real-time seat locking via Socket.io and atomic concurrency control to prevent double-bookings</li>
               <li>Implemented three-tier RBAC (User, Manager, Admin) with secured REST APIs, a custom promo engine, and Recharts-based analytics dashboards</li>
               <li>Designed a responsive, glassmorphic UI with Google Sign-In, GPS-based location detection, and UPI QR code checkout</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Item 4: Stockflow -->
-        <div class="timeline-item reveal" style="transition-delay: 0.15s">
-          <div class="timeline-dot"></div>
-          <time class="timeline-date" datetime="2025-09">Sep 2025 – Oct 2025</time>
-          <h3 class="timeline-title">Inventory Management System (Stockflow)</h3>
-          <div class="timeline-org">Full Stack Developer · Personal Project</div>
-          <div class="timeline-content">
-            <ul>
-              <li>Engineered scalable full-stack web application using React, Vite, Redux Toolkit, and Ant Design</li>
-              <li>Architected backend services using Node.js and Express with MongoDB for product tracking and order cycle management</li>
-              <li>Implemented secure JWT authentication and role-based access control (RBAC) to protect sensitive data</li>
-              <li>Designed and optimized RESTful APIs with strict server-side validation to ensure reliable data processing</li>
             </ul>
           </div>
         </div>
@@ -807,14 +808,14 @@
           <div class="cert-icon">🤖</div>
           <div>
             <div class="cert-name">Agentic AI Certified Foundations Associate</div>
-            <div class="cert-issuer">Oracle · Verified</div>
+            <div class="cert-issuer">Oracle · July 2026</div>
           </div>
         </div>
         <div class="cert-card reveal" style="transition-delay: 0.04s">
           <div class="cert-icon">💻</div>
           <div>
             <div class="cert-name">Full Stack Development</div>
-            <div class="cert-issuer">GUVI x HCL · Verified</div>
+            <div class="cert-issuer">GUVI x HCL · May 2026</div>
           </div>
         </div>
         <div class="cert-card reveal" style="transition-delay: 0.06s">
@@ -846,6 +847,117 @@
           </div>
         </div>
       </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================
+       RESUME SECTION (Interactive Document Viewer with Pan & Zoom)
+  ============================================================ -->
+  <section id="resume" aria-labelledby="resume-heading">
+    <div class="container">
+
+      <div class="reveal">
+        <div class="section-label">Curriculum Vitae</div>
+        <div class="resume-header-row">
+          <div>
+            <h2 class="section-title" id="resume-heading">
+              Interactive <span class="highlight">Resume</span>
+            </h2>
+            <p class="resume-subtitle">
+              Pinch, pan, or zoom to inspect high-definition verified document, or download a direct PDF copy.
+            </p>
+          </div>
+          <div class="resume-header-actions">
+            <a href="assets/resume.pdf" class="btn-primary resume-dl-btn" download="Balaji_H_Resume.pdf" aria-label="Download Balaji H's Resume PDF">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+              </svg>
+              <span>Download PDF</span>
+            </a>
+            <a href="assets/resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-secondary" aria-label="Open Resume in new tab">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15,3 21,3 21,9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+              <span>Open Tab ↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resume Viewer Wrapper -->
+      <div class="resume-viewer-card reveal" style="transition-delay: 0.1s" id="resumeViewerWrapper">
+        
+        <!-- Viewer Control Toolbar -->
+        <div class="resume-toolbar" role="toolbar" aria-label="Resume viewing and zoom controls">
+          <div class="resume-toolbar-left">
+            <button type="button" class="resume-tool-btn" id="resumeZoomOut" title="Zoom Out (-)" aria-label="Zoom out">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </button>
+            <span class="resume-zoom-level" id="resumeZoomLevel" title="Current zoom level" aria-live="polite">100%</span>
+            <button type="button" class="resume-tool-btn" id="resumeZoomIn" title="Zoom In (+)" aria-label="Zoom in">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </button>
+            <span class="resume-toolbar-sep" aria-hidden="true"></span>
+            <button type="button" class="resume-tool-btn" id="resumeFitWidth" title="Fit to Width" aria-label="Fit to Width">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+              <span class="toolbar-text">Fit Width</span>
+            </button>
+            <button type="button" class="resume-tool-btn" id="resumeReset" title="Reset Zoom (100%)" aria-label="Reset zoom">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              <span class="toolbar-text">Reset</span>
+            </button>
+          </div>
+
+          <div class="resume-toolbar-right">
+            <span class="resume-hint-badge" id="resumeTouchHint">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 15l6 6m-11-4a7 7 0 1 1 0-14 7 7 0 0 1 0 14z"/></svg>
+              <span>Pinch or Drag to pan</span>
+            </span>
+            <button type="button" class="resume-tool-btn" id="resumeFullscreen" title="Toggle Fullscreen" aria-label="Toggle fullscreen view">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" id="fullscreenIcon"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Viewport Stage with Drag & Pinch Pan/Zoom -->
+        <div class="resume-stage" id="resumeStage" tabindex="0" role="region" aria-label="Interactive resume canvas viewport">
+          <div class="resume-canvas-wrap" id="resumeCanvasWrap">
+            <!-- Loading Spinner -->
+            <div class="resume-loading" id="resumeLoading">
+              <div class="resume-spinner" aria-hidden="true"></div>
+              <span>Rendering crisp vector resume…</span>
+            </div>
+            <!-- High-Res HTML5 Canvas -->
+            <canvas id="resumeCanvas" class="resume-canvas" aria-label="Balaji H Software Engineer Resume"></canvas>
+            <!-- Accessible Fallback -->
+            <noscript>
+              <div style="padding: 40px; text-align: center; color: var(--text-secondary);">
+                <p style="margin-bottom: 16px;">JavaScript is required for the interactive canvas viewer.</p>
+                <a href="assets/resume.pdf" class="btn-primary" download="Balaji_H_Resume.pdf">Download Resume PDF</a>
+              </div>
+            </noscript>
+          </div>
+        </div>
+
+        <!-- Mobile Floating Bottom Quick Actions -->
+        <div class="resume-mobile-bar">
+          <div class="resume-mobile-info">
+            <span class="resume-doc-badge">PDF · 1 Page</span>
+            <span>Balaji H — Full Stack Developer</span>
+          </div>
+          <div class="resume-mobile-actions">
+            <a href="assets/resume.pdf" class="btn-primary btn-sm" download="Balaji_H_Resume.pdf" aria-label="Download Resume PDF">
+              Download ⬇
+            </a>
+          </div>
+        </div>
+
+      </div><!-- .resume-viewer-card -->
 
     </div>
   </section>
@@ -992,6 +1104,9 @@
 
   <!-- ===== THEME TOGGLE ===== -->
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" title="Toggle theme">🌙</button>
+
+  <!-- ===== PDF.JS SCRIPT (Mozilla PDF Renderer) ===== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
   <!-- ===== MAIN SCRIPT (deferred for performance) ===== -->
   <script src="js/script.js" defer></script>

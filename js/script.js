@@ -899,3 +899,344 @@ const projectDetails = {
   })();
 })();
 
+
+/* ===================== RESUME INTERACTIVE VIEWER (PDF.JS + PAN & ZOOM) ===================== */
+(function initResumeViewer() {
+  const canvas = document.getElementById('resumeCanvas');
+  const stage = document.getElementById('resumeStage');
+  const canvasWrap = document.getElementById('resumeCanvasWrap');
+  const loadingEl = document.getElementById('resumeLoading');
+  const zoomLevelEl = document.getElementById('resumeZoomLevel');
+  const btnZoomIn = document.getElementById('resumeZoomIn');
+  const btnZoomOut = document.getElementById('resumeZoomOut');
+  const btnFitWidth = document.getElementById('resumeFitWidth');
+  const btnReset = document.getElementById('resumeReset');
+  const btnFullscreen = document.getElementById('resumeFullscreen');
+  const viewerWrapper = document.getElementById('resumeViewerWrapper');
+
+  if (!canvas || !stage) return;
+
+  const pdfUrl = 'assets/resume.pdf';
+  let pdfDoc = null;
+  let pageNumber = 1;
+  let currentScale = 1.0;
+  let baseFitScale = 1.0;
+  let isRendering = false;
+  let renderPending = false;
+
+  // Touch & Mouse Drag state
+  let isDragging = false;
+  let startX = 0;
+  let startY = 0;
+  let scrollLeftStart = 0;
+  let scrollTopStart = 0;
+
+  // Pinch zoom state for touch devices
+  let initialPinchDistance = 0;
+  let initialPinchScale = 1.0;
+  let lastTapTime = 0;
+
+  // Configure PDF.js Worker
+  if (window.pdfjsLib) {
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+
+  function updateZoomLabel() {
+    if (zoomLevelEl) {
+      const pct = Math.round(currentScale * 100);
+      zoomLevelEl.textContent = `${pct}%`;
+    }
+  }
+
+  function getOptimalScale(page) {
+    const stageWidth = stage.clientWidth - (window.innerWidth < 600 ? 16 : 48);
+    const viewport = page.getViewport({ scale: 1.0 });
+    const fitScale = stageWidth / viewport.width;
+    // On desktop, keep default readable around 1.1x to 1.3x; on mobile, fit width perfectly
+    return window.innerWidth < 768 ? Math.max(fitScale, 0.4) : Math.min(Math.max(fitScale, 0.8), 1.25);
+  }
+
+  async function renderPage() {
+    if (!pdfDoc) return;
+    if (isRendering) {
+      renderPending = true;
+      return;
+    }
+    isRendering = true;
+
+    try {
+      const page = await pdfDoc.getPage(pageNumber);
+      const dpr = Math.min(window.devicePixelRatio || 2, 3); // High-res retina scale
+      
+      // Calculate viewport at current scale
+      const viewport = page.getViewport({ scale: currentScale * dpr });
+      const cssViewport = page.getViewport({ scale: currentScale });
+
+      canvas.width = Math.floor(viewport.width);
+      canvas.height = Math.floor(viewport.height);
+      canvas.style.width = `${Math.floor(cssViewport.width)}px`;
+      canvas.style.height = `${Math.floor(cssViewport.height)}px`;
+
+      const ctx = canvas.getContext('2d', { alpha: false });
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+
+      const renderContext = {
+        canvasContext: ctx,
+        viewport: viewport
+      };
+
+      await page.render(renderContext).promise;
+
+      if (loadingEl) {
+        loadingEl.classList.add('hidden');
+      }
+
+      updateZoomLabel();
+      stage.classList.toggle('can-drag', currentScale > baseFitScale * 0.95);
+    } catch (err) {
+      console.warn('PDF.js render error:', err);
+    } finally {
+      isRendering = false;
+      if (renderPending) {
+        renderPending = false;
+        renderPage();
+      }
+    }
+  }
+
+  function setScale(newScale, centerFocus = true) {
+    const clampedScale = Math.min(Math.max(newScale, 0.45), 3.5);
+    if (Math.abs(clampedScale - currentScale) < 0.01) return;
+
+    // Keep center position when zooming
+    if (centerFocus && stage) {
+      const prevWidth = canvas.clientWidth || 1;
+      const prevHeight = canvas.clientHeight || 1;
+      const ratioX = (stage.scrollLeft + stage.clientWidth / 2) / prevWidth;
+      const ratioY = (stage.scrollTop + stage.clientHeight / 2) / prevHeight;
+
+      currentScale = clampedScale;
+      renderPage().then(() => {
+        const newWidth = canvas.clientWidth;
+        const newHeight = canvas.clientHeight;
+        stage.scrollLeft = ratioX * newWidth - stage.clientWidth / 2;
+        stage.scrollTop = ratioY * newHeight - stage.clientHeight / 2;
+      });
+    } else {
+      currentScale = clampedScale;
+      renderPage();
+    }
+  }
+
+  // Load PDF Document
+  async function loadPDF() {
+    if (!window.pdfjsLib) {
+      // Fallback if CDN blocked
+      if (loadingEl) {
+        loadingEl.innerHTML = `
+          <p style="margin-bottom:12px;color:var(--text-primary)">Interactive viewer preview</p>
+          <a href="${pdfUrl}" class="btn-primary" download="Balaji_H_Resume.pdf">Download Resume PDF</a>
+        `;
+      }
+      return;
+    }
+
+    try {
+      const loadingTask = window.pdfjsLib.getDocument({
+        url: pdfUrl,
+        cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
+        cMapPacked: true
+      });
+
+      pdfDoc = await loadingTask.promise;
+      const firstPage = await pdfDoc.getPage(1);
+      baseFitScale = getOptimalScale(firstPage);
+      currentScale = baseFitScale;
+      await renderPage();
+    } catch (error) {
+      console.error('Failed to load resume PDF:', error);
+      if (loadingEl) {
+        loadingEl.innerHTML = `
+          <p style="margin-bottom:12px;color:var(--text-secondary)">PDF preview ready</p>
+          <a href="${pdfUrl}" class="btn-primary" target="_blank" download="Balaji_H_Resume.pdf">Open &amp; Download PDF</a>
+        `;
+      }
+    }
+  }
+
+  // Zoom Button Handlers
+  if (btnZoomIn) {
+    btnZoomIn.addEventListener('click', () => setScale(currentScale * 1.2));
+  }
+  if (btnZoomOut) {
+    btnZoomOut.addEventListener('click', () => setScale(currentScale / 1.2));
+  }
+  if (btnFitWidth) {
+    btnFitWidth.addEventListener('click', async () => {
+      if (!pdfDoc) return;
+      const page = await pdfDoc.getPage(1);
+      const stageWidth = stage.clientWidth - (window.innerWidth < 600 ? 16 : 48);
+      const viewport = page.getViewport({ scale: 1.0 });
+      setScale(stageWidth / viewport.width, false);
+      stage.scrollLeft = (canvas.clientWidth - stage.clientWidth) / 2;
+    });
+  }
+  if (btnReset) {
+    btnReset.addEventListener('click', () => {
+      setScale(1.0, false);
+      stage.scrollLeft = (canvas.clientWidth - stage.clientWidth) / 2;
+    });
+  }
+
+  // Fullscreen Handler
+  if (btnFullscreen && viewerWrapper) {
+    btnFullscreen.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        if (viewerWrapper.requestFullscreen) {
+          viewerWrapper.requestFullscreen().catch(() => {
+            viewerWrapper.classList.toggle('is-fullscreen');
+          });
+        } else {
+          viewerWrapper.classList.toggle('is-fullscreen');
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      const isFull = !!document.fullscreenElement;
+      viewerWrapper.classList.toggle('is-fullscreen', isFull);
+      if (btnFitWidth) btnFitWidth.click();
+    });
+  }
+
+  // Desktop Mouse Drag / Pan
+  stage.addEventListener('mousedown', e => {
+    if (e.button !== 0) return; // Only left click
+    isDragging = true;
+    stage.classList.add('is-dragging');
+    startX = e.pageX - stage.offsetLeft;
+    startY = e.pageY - stage.offsetTop;
+    scrollLeftStart = stage.scrollLeft;
+    scrollTopStart = stage.scrollTop;
+  });
+
+  window.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - stage.offsetLeft;
+    const y = e.pageY - stage.offsetTop;
+    const walkX = (x - startX) * 1.2;
+    const walkY = (y - startY) * 1.2;
+    stage.scrollLeft = scrollLeftStart - walkX;
+    stage.scrollTop = scrollTopStart - walkY;
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (isDragging) {
+      isDragging = false;
+      stage.classList.remove('is-dragging');
+    }
+  });
+
+  // Desktop Mouse Wheel Zoom (Ctrl + Wheel or Cmd + Wheel)
+  stage.addEventListener('wheel', e => {
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      const zoomFactor = e.deltaY < 0 ? 1.15 : 0.85;
+      setScale(currentScale * zoomFactor);
+    }
+  }, { passive: false });
+
+  // Mobile Touch Gestures: Pan, Pinch-to-Zoom & Double-Tap
+  stage.addEventListener('touchstart', e => {
+    if (e.touches.length === 1) {
+      // Single finger pan
+      const touch = e.touches[0];
+      startX = touch.pageX;
+      startY = touch.pageY;
+      scrollLeftStart = stage.scrollLeft;
+      scrollTopStart = stage.scrollTop;
+
+      // Double tap detector
+      const now = Date.now();
+      if (now - lastTapTime < 300) {
+        e.preventDefault();
+        if (currentScale > baseFitScale * 1.2) {
+          setScale(baseFitScale);
+        } else {
+          setScale(baseFitScale * 1.6);
+        }
+      }
+      lastTapTime = now;
+
+    } else if (e.touches.length === 2) {
+      // Two finger pinch
+      e.preventDefault();
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      initialPinchDistance = Math.hypot(touch2.pageX - touch1.pageX, touch2.pageY - touch1.pageY);
+      initialPinchScale = currentScale;
+    }
+  }, { passive: false });
+
+  stage.addEventListener('touchmove', e => {
+    if (e.touches.length === 1) {
+      // Pan when zoomed in
+      if (currentScale > baseFitScale * 1.05) {
+        const touch = e.touches[0];
+        const walkX = (touch.pageX - startX);
+        const walkY = (touch.pageY - startY);
+        stage.scrollLeft = scrollLeftStart - walkX;
+        stage.scrollTop = scrollTopStart - walkY;
+      }
+    } else if (e.touches.length === 2) {
+      // Pinch zoom in action
+      e.preventDefault();
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      const currentDistance = Math.hypot(touch2.pageX - touch1.pageX, touch2.pageY - touch1.pageY);
+      if (initialPinchDistance > 0) {
+        const scaleMultiplier = currentDistance / initialPinchDistance;
+        const newScale = initialPinchScale * scaleMultiplier;
+        setScale(newScale, false);
+      }
+    }
+  }, { passive: false });
+
+  stage.addEventListener('touchend', e => {
+    if (e.touches.length < 2) {
+      initialPinchDistance = 0;
+    }
+  });
+
+  // Responsive resize refit
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(async () => {
+      if (!pdfDoc) return;
+      const page = await pdfDoc.getPage(1);
+      const newBase = getOptimalScale(page);
+      if (Math.abs(baseFitScale - currentScale) < 0.1) {
+        baseFitScale = newBase;
+        setScale(newBase, false);
+      } else {
+        baseFitScale = newBase;
+      }
+    }, 200);
+  });
+
+  // Start PDF load when document is ready
+  if (document.readyState === 'complete') {
+    loadPDF();
+  } else {
+    window.addEventListener('load', loadPDF);
+  }
+})();
+
+
