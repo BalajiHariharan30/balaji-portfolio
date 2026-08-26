@@ -2570,3 +2570,81 @@ body.light {
     gap: 4px;
   }
 }
+
+/* Timeline Badge */
+.timeline-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(183, 148, 244, 0.12);
+  color: var(--violet-bright);
+  border: 1px solid rgba(183, 148, 244, 0.3);
+  margin-left: 8px;
+  vertical-align: middle;
+  font-weight: 500;
+}
+
+/* Resume Summary Highlights Grid */
+.resume-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.resume-summary-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: var(--transition);
+}
+
+.resume-summary-card:hover {
+  border-color: rgba(99, 179, 237, 0.3);
+  background: var(--surface-hover);
+  transform: translateY(-2px);
+}
+
+.resume-card-icon {
+  font-size: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: rgba(99, 179, 237, 0.08);
+  border: 1px solid rgba(99, 179, 237, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.resume-card-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cyan);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.resume-card-heading {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.resume-card-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
