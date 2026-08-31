@@ -534,7 +534,7 @@
 const projectDetails = {
   caresync: {
     title: "CareSync — AI Doctor Appointment System",
-    date: "Feb – Apr 2026",
+    date: "June – Aug 2026",
     tags: "MERN Stack · Gemini AI · Telemedicine",
     desc: "CareSync is a state-of-the-art healthcare orchestration system designed to streamline patient triaging, doctor availability, appointment scheduling, and remote healthcare consultations. It automates queue management and diagnoses priority routing using Google Gemini AI.",
     architecture: `
