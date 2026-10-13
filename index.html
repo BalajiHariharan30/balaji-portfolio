@@ -48,8 +48,8 @@
     </div>
   </div>
 
-  <!-- ===== SCROLL PROGRESS BAR (2px Electric Indigo) ===== -->
-  <div class="scroll-progress-bar" id="scrollProgressBar" role="progressbar" aria-label="Page scroll progress"></div>
+  <!-- ===== SCROLL PROGRESS BAR ===== -->
+  <div id="scrollProgress" role="progressbar" aria-label="Page scroll progress"></div>
 
   <!-- ===== AMBIENT GLOW BLOBS ===== -->
   <div class="blob blob-1" aria-hidden="true"></div>
@@ -263,44 +263,24 @@
   <section id="skills" aria-labelledby="skills-heading">
     <div class="container">
 
-      <div class="reveal section-header-centered">
-        <div class="section-label-accent">TOOLKIT</div>
+      <div class="reveal">
+        <div class="section-label">Technical Skills</div>
         <h2 class="section-title" id="skills-heading">
-          Skills I <span class="highlight-accent">work with</span>.
+          My <span class="highlight">Toolkit</span>
         </h2>
-        <p class="section-subtext">
-          Production-tested technologies across frontend, backend, AI orchestration, and cloud infrastructure.
-        </p>
       </div>
 
-      <!-- Swipeable Category Tabs -->
-      <div class="skills-category-tabs" role="tablist" aria-label="Filter skills by category">
-        <button class="skill-cat-tab active" data-category="all" role="tab" aria-selected="true">All Stack</button>
-        <button class="skill-cat-tab" data-category="frontend" role="tab" aria-selected="false">Frontend</button>
-        <button class="skill-cat-tab" data-category="backend" role="tab" aria-selected="false">Backend</button>
-        <button class="skill-cat-tab" data-category="ai" role="tab" aria-selected="false">AI &amp; Cloud</button>
-        <button class="skill-cat-tab" data-category="tools" role="tab" aria-selected="false">Tools &amp; CI/CD</button>
+      <!-- Filter pills -->
+      <div class="skills-categories reveal" style="transition-delay: 0.1s" role="group" aria-label="Filter skills by category">
+        <button class="cat-pill active" data-filter="all">All</button>
+        <button class="cat-pill" data-filter="lang">Languages</button>
+        <button class="cat-pill" data-filter="frontend">Frontend</button>
+        <button class="cat-pill" data-filter="backend">Backend</button>
+        <button class="cat-pill" data-filter="tools">Tools</button>
       </div>
 
-      <!-- Dual Row Opposing Marquee Stage with edge masks -->
-      <div class="skills-marquee-stage" id="skillsMarqueeStage" aria-label="Interactive skills carousel. Tap a card to flip for details, drag to swipe.">
-        <!-- Row 1: Right to Left -->
-        <div class="marquee-strip-wrap marquee-strip-row1" id="marqueeRow1Wrap">
-          <div class="marquee-strip-track" id="marqueeTrack1">
-            <!-- Dynamic 3D flip cards populated by js/portfolio-master.js -->
-          </div>
-        </div>
-
-        <!-- Row 2: Left to Right -->
-        <div class="marquee-strip-wrap marquee-strip-row2" id="marqueeRow2Wrap">
-          <div class="marquee-strip-track" id="marqueeTrack2">
-            <!-- Dynamic 3D flip cards populated by js/portfolio-master.js -->
-          </div>
-        </div>
-      </div>
-
-      <!-- Skills grid (hidden fallback) -->
-      <div class="skills-grid" id="skillsGrid" style="display: none;">
+      <!-- Skills grid -->
+      <div class="skills-grid" id="skillsGrid">
 
         <!-- Languages -->
         <div class="skill-card lang reveal" style="transition-delay: 0.02s">
@@ -469,239 +449,230 @@
   <!-- ============================================================
        PROJECTS SECTION
   ============================================================ -->
-  <!-- ============================================================
-       PROJECTS SECTION: STACKED CARD DECK (Vertical Scroll)
-  ============================================================ -->
   <section id="projects" aria-labelledby="projects-heading">
     <div class="container">
 
-      <div class="reveal section-header-centered">
-        <div class="section-label-accent">SELECTED WORK</div>
+      <div class="reveal">
+        <div class="section-label">Featured Work</div>
         <h2 class="section-title" id="projects-heading">
-          Projects that <span class="highlight-accent">ship</span>.
+          Things I've <span class="highlight">Built</span>
         </h2>
-        <p class="section-subtext">
-          High-performance full-stack applications, intelligent AI pipelines, and responsive web systems.
-        </p>
       </div>
 
-      <!-- Vertical Sticky Stacked Deck Container -->
-      <div class="project-deck-container" id="projectDeck">
+      <!-- Filter buttons -->
+      <div class="projects-filters" role="group" aria-label="Filter projects by category">
+        <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter-btn" data-filter="web" aria-pressed="false">Full-Stack / Web</button>
+        <button class="filter-btn" data-filter="ai" aria-pressed="false">AI &amp; Automation</button>
+        <button class="filter-btn" data-filter="backend" aria-pressed="false">Backend &amp; Cloud</button>
+      </div>
 
-        <!-- Card 1: CareSync -->
-        <article class="deck-card reveal" data-project-id="caresync" style="top: 86px;" tabindex="0" role="button" aria-label="CareSync — AI Doctor Appointment system. Tap for full case study.">
-          <div class="card-status-chip live"><span class="pulse-dot"></span>Live</div>
-          <div class="card-counter-pill">01 / 05</div>
-          <div class="deck-screenshot-swiper">
-            <div class="swiper-track">
-              <div class="swiper-slide"><img src="assets/images/caresync-logo.jpg" alt="CareSync preview" loading="lazy"></div>
-              <div class="swiper-slide"><img src="assets/images/og-preview.png" alt="CareSync dashboard" loading="lazy"></div>
-            </div>
-            <div class="deck-card-gradient"></div>
-            <div class="swiper-dots">
-              <button class="swiper-dot active" aria-label="Slide 1"></button>
-              <button class="swiper-dot" aria-label="Slide 2"></button>
-            </div>
+      <!-- Mobile swipe hint -->
+      <div class="mobile-swipe-hint" aria-hidden="true">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Swipe to browse
+      </div>
+
+      <!-- Projects grid / mobile carousel wrapper -->
+      <div class="projects-carousel-wrap">
+      <div class="projects-grid">
+
+        <!-- Project 1: CareSync -->
+        <article class="project-card reveal" data-tags="web ai backend" style="transition-delay: 0.1s" tabindex="0" role="button" aria-label="View CareSync project details" data-project="caresync">
+          <div class="project-preview">
+            <img src="assets/images/caresync-logo.jpg" class="project-preview-img" loading="lazy" decoding="async" alt="CareSync Logo">
+            <div class="project-preview-grid"></div>
+            <div class="project-number">01</div>
+            <div class="project-tag-floating" style="color: var(--violet);"><span class="live-dot" aria-hidden="true"></span>Live on Vercel</div>
           </div>
-          <div class="card-body-block">
-            <div>
-              <div class="card-header-row">
-                <div class="card-icon-tile">🩺</div>
-                <h3 class="card-title">CareSync — AI Doctor Appointment</h3>
-              </div>
-              <p class="card-desc">AI-powered MERN healthcare platform orchestrating clinical appointments, Google Gemini symptom triaging, and real-time telemedicine.</p>
-              <div class="card-tech-stack">
-                <span class="card-tech-pill">React.js</span>
-                <span class="card-tech-pill">Node.js</span>
-                <span class="card-tech-pill">MongoDB</span>
-                <span class="card-tech-pill">Gemini AI</span>
-                <span class="card-tech-pill plus">+2</span>
-              </div>
-              <div class="card-meta-row">
-                <span>FULL STACK ENGINEER</span>
-                <span>•</span>
-                <span>2026</span>
-                <span>•</span>
-                <span>HEALTHCARE SAAS</span>
-              </div>
+          <div class="project-body">
+            <h3 class="project-name">CareSync — AI Doctor Appointment</h3>
+            <p class="project-desc">
+              AI-powered MERN-based doctor appointment system supporting patients, doctors, and admins.
+              Features real-time telemedicine, AI triage, and intelligent queue management. Deployed on Vercel.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">React</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">Node.js</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">MongoDB</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">Gemini AI</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">JWT</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">RBAC</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">Vercel</span>
             </div>
-            <div class="card-action-row">
-              <a href="https://care-sync-pro-lbel.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-deck-primary" aria-label="Open live demo for CareSync">Live Demo ↗</a>
-              <a href="https://github.com/BalajiHariharan30" target="_blank" rel="noopener noreferrer" class="btn-deck-secondary" aria-label="View CareSync source on GitHub">GitHub ⌥</a>
+            <div class="project-links">
+              <a href="https://github.com/BalajiHariharan30" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="View CareSync on GitHub">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                </svg>
+                GitHub
+              </a>
+              <a href="https://care-sync-pro-lbel.vercel.app/" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="View CareSync Live Demo">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  <polyline points="15,3 21,3 21,9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+                Live Demo
+              </a>
             </div>
           </div>
         </article>
 
-        <!-- Card 2: InsightOps -->
-        <article class="deck-card reveal" data-project-id="insightops" style="top: 100px;" tabindex="0" role="button" aria-label="InsightOps — AI Inventory & Expense SaaS. Tap for full case study.">
-          <div class="card-status-chip live"><span class="pulse-dot"></span>Live</div>
-          <div class="card-counter-pill">02 / 05</div>
-          <div class="deck-screenshot-swiper">
-            <div class="swiper-track">
-              <div class="swiper-slide"><img src="assets/images/insightops-logo.jpg" alt="InsightOps preview" loading="lazy"></div>
-              <div class="swiper-slide"><img src="assets/images/og-preview.png" alt="InsightOps dashboard" loading="lazy"></div>
-            </div>
-            <div class="deck-card-gradient"></div>
-            <div class="swiper-dots">
-              <button class="swiper-dot active" aria-label="Slide 1"></button>
-              <button class="swiper-dot" aria-label="Slide 2"></button>
-            </div>
+        <!-- Project 2: InsightOps -->
+        <article class="project-card reveal" data-tags="web ai backend" style="transition-delay: 0.15s" tabindex="0" role="button" aria-label="View InsightOps project details" data-project="inventory">
+          <div class="project-preview">
+            <img src="assets/images/insightops-logo.jpg" class="project-preview-img" loading="lazy" decoding="async" alt="InsightOps Logo">
+            <div class="project-preview-grid"></div>
+            <div class="project-number">02</div>
+            <div class="project-tag-floating" style="color: var(--cyan);"><span class="live-dot" aria-hidden="true"></span>Live on Vercel</div>
           </div>
-          <div class="card-body-block">
-            <div>
-              <div class="card-header-row">
-                <div class="card-icon-tile">📊</div>
-                <h3 class="card-title">InsightOps — AI Inventory &amp; Expense</h3>
-              </div>
-              <p class="card-desc">Multi-tenant cloud dashboard delivering real-time expense anomaly detection, Gemini natural language queries, and live inventory sync.</p>
-              <div class="card-tech-stack">
-                <span class="card-tech-pill">React.js</span>
-                <span class="card-tech-pill">Node.js</span>
-                <span class="card-tech-pill">MongoDB</span>
-                <span class="card-tech-pill">Redis</span>
-                <span class="card-tech-pill plus">+2</span>
-              </div>
-              <div class="card-meta-row">
-                <span>FULL STACK ENGINEER</span>
-                <span>•</span>
-                <span>2026</span>
-                <span>•</span>
-                <span>B2B ANALYTICS</span>
-              </div>
+          <div class="project-body">
+            <h3 class="project-name">InsightOps — AI Inventory &amp; Expense</h3>
+            <p class="project-desc">
+              A multi-tenant SaaS platform designed to simplify inventory and expense management with AI-powered insights and real-time updates.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag" style="color: var(--cyan); background: rgba(99,179,237,0.08); border-color: rgba(99,179,237,0.2);">React</span>
+              <span class="tech-tag" style="color: var(--cyan); background: rgba(99,179,237,0.08); border-color: rgba(99,179,237,0.2);">Node.js</span>
+              <span class="tech-tag" style="color: var(--cyan); background: rgba(99,179,237,0.08); border-color: rgba(99,179,237,0.2);">MongoDB</span>
+              <span class="tech-tag" style="color: var(--cyan); background: rgba(99,179,237,0.08); border-color: rgba(99,179,237,0.2);">Redis</span>
+              <span class="tech-tag" style="color: var(--cyan); background: rgba(99,179,237,0.08); border-color: rgba(99,179,237,0.2);">Socket.io</span>
+              <span class="tech-tag" style="color: var(--cyan); background: rgba(99,179,237,0.08); border-color: rgba(99,179,237,0.2);">Gemini AI</span>
+              <span class="tech-tag" style="color: var(--cyan); background: rgba(99,179,237,0.08); border-color: rgba(99,179,237,0.2);">JWT</span>
+              <span class="tech-tag" style="color: var(--cyan); background: rgba(99,179,237,0.08); border-color: rgba(99,179,237,0.2);">RBAC</span>
             </div>
-            <div class="card-action-row">
-              <a href="https://insightops-saas.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-deck-primary" aria-label="Open live demo for InsightOps">Live Demo ↗</a>
-              <a href="https://github.com/BalajiHariharan30/insightops-saas" target="_blank" rel="noopener noreferrer" class="btn-deck-secondary" aria-label="View InsightOps source on GitHub">GitHub ⌥</a>
+            <div class="project-links">
+              <a href="https://github.com/BalajiHariharan30/insightops-saas" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="View InsightOps on GitHub">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                </svg>
+                GitHub
+              </a>
+              <a href="https://insightops-saas.vercel.app/" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="View InsightOps Live Demo">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  <polyline points="15,3 21,3 21,9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+                Live Demo
+              </a>
             </div>
           </div>
         </article>
 
-        <!-- Card 3: ReserveX -->
-        <article class="deck-card reveal" data-project-id="reservex" style="top: 114px;" tabindex="0" role="button" aria-label="ReserveX — Ticket Booking Platform. Tap for full case study.">
-          <div class="card-status-chip"><span class="pulse-dot"></span>Case Study</div>
-          <div class="card-counter-pill">03 / 05</div>
-          <div class="deck-screenshot-swiper">
-            <div class="swiper-track">
-              <div class="swiper-slide"><img src="assets/images/reservex-logo.jpg" alt="ReserveX preview" loading="lazy"></div>
-              <div class="swiper-slide"><img src="assets/images/og-preview.png" alt="ReserveX seat selection" loading="lazy"></div>
-            </div>
-            <div class="deck-card-gradient"></div>
-            <div class="swiper-dots">
-              <button class="swiper-dot active" aria-label="Slide 1"></button>
-              <button class="swiper-dot" aria-label="Slide 2"></button>
-            </div>
+        <!-- Project 3: ReserveX -->
+        <article class="project-card reveal" data-tags="web backend" style="transition-delay: 0.2s">
+          <div class="project-preview">
+            <img src="assets/images/reservex-logo.jpg" class="project-preview-img" loading="lazy" decoding="async" alt="ReserveX Logo">
+            <div class="project-preview-grid"></div>
+            <div class="project-number">03</div>
+            <div class="project-tag-floating" style="color: var(--violet);">Oct – Dec 2025</div>
           </div>
-          <div class="card-body-block">
-            <div>
-              <div class="card-header-row">
-                <div class="card-icon-tile">🎟️</div>
-                <h3 class="card-title">ReserveX — Ticket Booking Platform</h3>
-              </div>
-              <p class="card-desc">High-concurrency event reservation portal featuring real-time seat locking via Socket.io and atomic concurrency double-booking prevention.</p>
-              <div class="card-tech-stack">
-                <span class="card-tech-pill">React.js</span>
-                <span class="card-tech-pill">Redux</span>
-                <span class="card-tech-pill">Node.js</span>
-                <span class="card-tech-pill">Express</span>
-                <span class="card-tech-pill plus">+2</span>
-              </div>
-              <div class="card-meta-row">
-                <span>FULL STACK ENGINEER</span>
-                <span>•</span>
-                <span>2025</span>
-                <span>•</span>
-                <span>TICKETING SAAS</span>
-              </div>
+          <div class="project-body">
+            <h3 class="project-name">ReserveX — Premium Ticket Booking Platform</h3>
+            <p class="project-desc">
+              MERN-based ticket booking platform with real-time seat locking via Socket.io and atomic concurrency control.
+              Features a custom promo engine, GPS-based location detection, and three-tier RBAC protection.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">React</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">Redux</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">Node.js</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">Express</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">MongoDB</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">Socket.io</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">JWT</span>
+              <span class="tech-tag" style="color: var(--violet); background: rgba(183,148,244,0.08); border-color: rgba(183,148,244,0.2);">RBAC</span>
             </div>
-            <div class="card-action-row" style="grid-template-columns: 1fr;">
-              <a href="https://github.com/BalajiHariharan30" target="_blank" rel="noopener noreferrer" class="btn-deck-secondary" aria-label="View ReserveX source on GitHub">GitHub Repository ⌥</a>
+            <div class="project-links">
+              <a href="https://github.com/BalajiHariharan30" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="View ReserveX on GitHub">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37(3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                </svg>
+                GitHub
+              </a>
             </div>
           </div>
         </article>
 
-        <!-- Card 4: Stockflow -->
-        <article class="deck-card reveal" data-project-id="stockflow" style="top: 128px;" tabindex="0" role="button" aria-label="Stockflow — Supply Chain System. Tap for full case study.">
-          <div class="card-status-chip live"><span class="pulse-dot"></span>Live</div>
-          <div class="card-counter-pill">04 / 05</div>
-          <div class="deck-screenshot-swiper">
-            <div class="swiper-track">
-              <div class="swiper-slide"><img src="assets/images/inventory-logo.jpg" alt="Stockflow preview" loading="lazy"></div>
-              <div class="swiper-slide"><img src="assets/images/og-preview.png" alt="Stockflow inventory sheet" loading="lazy"></div>
-            </div>
-            <div class="deck-card-gradient"></div>
-            <div class="swiper-dots">
-              <button class="swiper-dot active" aria-label="Slide 1"></button>
-              <button class="swiper-dot" aria-label="Slide 2"></button>
-            </div>
+        <!-- Project 4: Inventory Management -->
+        <article class="project-card reveal" data-tags="web backend" style="transition-delay: 0.25s" tabindex="0" role="button" aria-label="View Inventory Management System project details" data-project="inventory">
+          <div class="project-preview">
+            <img src="assets/images/inventory-logo.jpg" class="project-preview-img" loading="lazy" decoding="async" alt="Inventory Management Logo">
+            <div class="project-preview-grid"></div>
+            <div class="project-number">04</div>
+            <div class="project-tag-floating" style="color: var(--cyan);"><span class="live-dot" aria-hidden="true"></span>Live on Vercel</div>
           </div>
-          <div class="card-body-block">
-            <div>
-              <div class="card-header-row">
-                <div class="card-icon-tile">📦</div>
-                <h3 class="card-title">Stockflow — Supply Chain System</h3>
-              </div>
-              <p class="card-desc">Scalable supply chain engine managing warehouse inventories, vendor dispatch workflows, and automated restock alerts with strict RBAC security.</p>
-              <div class="card-tech-stack">
-                <span class="card-tech-pill">React</span>
-                <span class="card-tech-pill">Vite</span>
-                <span class="card-tech-pill">Redux</span>
-                <span class="card-tech-pill">Node.js</span>
-                <span class="card-tech-pill plus">+2</span>
-              </div>
-              <div class="card-meta-row">
-                <span>FULL STACK DEVELOPER</span>
-                <span>•</span>
-                <span>2025</span>
-                <span>•</span>
-                <span>SUPPLY CHAIN</span>
-              </div>
+          <div class="project-body">
+            <h3 class="project-name">Inventory Management System (Stockflow)</h3>
+            <p class="project-desc">
+              Scalable full-stack web application for product tracking and order cycle management,
+              featuring secure JWT authentication and role-based access control.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">React</span>
+              <span class="tech-tag">Vite</span>
+              <span class="tech-tag">Redux</span>
+              <span class="tech-tag">Node.js</span>
+              <span class="tech-tag">MongoDB</span>
+              <span class="tech-tag">JWT</span>
+              <span class="tech-tag">RBAC</span>
             </div>
-            <div class="card-action-row">
-              <a href="https://inventory-management-pcw8.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-deck-primary" aria-label="Open live demo for Stockflow">Live Demo ↗</a>
-              <a href="https://github.com/BalajiHariharan30" target="_blank" rel="noopener noreferrer" class="btn-deck-secondary" aria-label="View Stockflow source on GitHub">GitHub ⌥</a>
+            <div class="project-links">
+              <a href="https://github.com/BalajiHariharan30" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="View Inventory Management System on GitHub">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                </svg>
+                GitHub
+              </a>
+              <a href="https://inventory-management-pcw8.vercel.app/" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="View Inventory Management System Live Demo">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  <polyline points="15,3 21,3 21,9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+                Live Demo
+              </a>
             </div>
           </div>
         </article>
 
-        <!-- Card 5: Portfolio v2 -->
-        <article class="deck-card reveal" data-project-id="portfolio" style="top: 142px;" tabindex="0" role="button" aria-label="Portfolio v2 — Touch-Native Experience. Tap for full case study.">
-          <div class="card-status-chip live"><span class="pulse-dot"></span>Live</div>
-          <div class="card-counter-pill">05 / 05</div>
-          <div class="deck-screenshot-swiper">
-            <div class="swiper-track">
-              <div class="swiper-slide"><img src="assets/images/og-preview.png" alt="Portfolio v2 preview" loading="lazy"></div>
+        <!-- Project 5: Portfolio -->
+        <article class="project-card reveal" data-tags="web" style="transition-delay: 0.3s">
+          <div class="project-preview" style="background: linear-gradient(135deg, #0f2418, #1a2010);">
+            <div class="project-preview-grid"></div>
+            <div class="project-preview-bg">
+              <div class="project-preview-icon">🌐</div>
             </div>
-            <div class="deck-card-gradient"></div>
+            <div class="project-number">05</div>
+            <div class="project-tag-floating" style="color: var(--emerald);">2026</div>
           </div>
-          <div class="card-body-block">
-            <div>
-              <div class="card-header-row">
-                <div class="card-icon-tile">⚡</div>
-                <h3 class="card-title">Portfolio v2 — Touch-Native</h3>
-              </div>
-              <p class="card-desc">Touch-native personal portfolio featuring a stacked card deck, infinite bi-directional marquee, and haptic spring interactions.</p>
-              <div class="card-tech-stack">
-                <span class="card-tech-pill">HTML5</span>
-                <span class="card-tech-pill">CSS3</span>
-                <span class="card-tech-pill">JavaScript</span>
-                <span class="card-tech-pill">Canvas API</span>
-              </div>
-              <div class="card-meta-row">
-                <span>CREATIVE ENGINEER</span>
-                <span>•</span>
-                <span>2026</span>
-                <span>•</span>
-                <span>PERSONAL WEBSITE</span>
-              </div>
+          <div class="project-body">
+            <h3 class="project-name">Portfolio v2 — This Website</h3>
+            <p class="project-desc">
+              A premium personal portfolio built with semantic HTML5, vanilla CSS animations, and
+              JavaScript. No frameworks — pure craft, performance focus, and pixel-perfect design.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag" style="color: var(--emerald); background: rgba(104,211,145,0.08); border-color: rgba(104,211,145,0.2);">HTML5</span>
+              <span class="tech-tag" style="color: var(--emerald); background: rgba(104,211,145,0.08); border-color: rgba(104,211,145,0.2);">CSS3</span>
+              <span class="tech-tag" style="color: var(--emerald); background: rgba(104,211,145,0.08); border-color: rgba(104,211,145,0.2);">JavaScript</span>
+              <span class="tech-tag" style="color: var(--emerald); background: rgba(104,211,145,0.08); border-color: rgba(104,211,145,0.2);">Canvas API</span>
             </div>
-            <div class="card-action-row">
-              <a href="https://balaji-portfolio-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-deck-primary" aria-label="Open live demo for Portfolio v2">Live Demo ↗</a>
-              <a href="https://github.com/BalajiHariharan30/balaji-portfolio" target="_blank" rel="noopener noreferrer" class="btn-deck-secondary" aria-label="View Portfolio source on GitHub">GitHub ⌥</a>
+            <div class="project-links">
+              <a href="https://github.com/BalajiHariharan30" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="View Portfolio on GitHub">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                </svg>
+                GitHub
+              </a>
             </div>
           </div>
         </article>
 
-      </div><!-- .project-deck-container -->
+      </div><!-- .projects-grid -->
+      </div><!-- .projects-carousel-wrap -->
     </div>
   </section>
 
@@ -1043,50 +1014,10 @@
     </div>
   </div>
 
-  <!-- ===== CASE STUDY DRAGGABLE BOTTOM SHEET ===== -->
-  <div class="case-study-sheet-backdrop" id="caseStudyBackdrop" tabindex="-1"></div>
-  <div class="case-study-bottom-sheet" id="caseStudySheet" role="dialog" aria-modal="true" aria-label="Project Case Study">
-    <div class="sheet-pull-handle-wrap" id="sheetPullHandle">
-      <div class="sheet-pull-handle"></div>
-    </div>
-    <div id="caseStudySheetContent">
-      <!-- Injected dynamically by js/portfolio-master.js -->
-    </div>
-  </div>
-
-  <!-- ===== MOBILE STICKY GLASS BOTTOM NAVIGATION ===== -->
-  <nav class="mobile-bottom-nav" id="mobileBottomNav" aria-label="Mobile Navigation">
-    <div class="mobile-bottom-nav-inner">
-      <div class="mob-nav-pill-indicator" id="mobNavIndicator"></div>
-      <a href="#hero" class="mob-nav-item active" data-section="hero">
-        <span class="mob-nav-icon">🏠</span>
-        <span>Home</span>
-      </a>
-      <a href="#projects" class="mob-nav-item" data-section="projects">
-        <span class="mob-nav-icon">⚡</span>
-        <span>Work</span>
-      </a>
-      <a href="#skills" class="mob-nav-item" data-section="skills">
-        <span class="mob-nav-icon">🛠️</span>
-        <span>Skills</span>
-      </a>
-      <a href="#about" class="mob-nav-item" data-section="about">
-        <span class="mob-nav-icon">👤</span>
-        <span>About</span>
-      </a>
-      <a href="#contact" class="mob-nav-item" data-section="contact">
-        <span class="mob-nav-icon">✉️</span>
-        <span>Contact</span>
-      </a>
-    </div>
-  </nav>
-
   <!-- ===== THEME TOGGLE ===== -->
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" title="Toggle theme">🌙</button>
 
-  <!-- ===== MAIN SCRIPTS (deferred for performance) ===== -->
+  <!-- ===== MAIN SCRIPT (deferred for performance) ===== -->
   <script src="js/script.js" defer></script>
-  <!-- ===== MASTER ENGINE: Touch-Native Stacking Deck, 3D Flip Marquee & Mobile Nav ===== -->
-  <script src="js/portfolio-master.js" defer></script>
 </body>
 </html>
