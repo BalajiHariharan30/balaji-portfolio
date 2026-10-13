@@ -270,6 +270,75 @@
         </h2>
       </div>
 
+      <!-- ===== SKILLS MARQUEE (Infinite Dual-Row Auto-Scroll) ===== -->
+      <div class="skills-marquee-container reveal" aria-label="Highlighted Technologies Marquee">
+        <!-- Row 1: Scrolls Left -->
+        <div class="marquee marquee-row-1">
+          <div class="marquee-track">
+            <div class="marquee-group">
+              <span class="marquee-chip"><span class="marquee-chip-icon">🟨</span>JavaScript</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">☕</span>Java</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🗄️</span>SQL</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">⚛️</span>React.js</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🌐</span>HTML/CSS</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🔄</span>Redux Toolkit</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">⚡</span>Vite</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🟢</span>Node.js</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🚂</span>Express.js</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🍃</span>MongoDB</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🐬</span>MySQL</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🔐</span>JWT/RBAC</span>
+            </div>
+            <div class="marquee-group" aria-hidden="true">
+              <span class="marquee-chip"><span class="marquee-chip-icon">🟨</span>JavaScript</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">☕</span>Java</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🗄️</span>SQL</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">⚛️</span>React.js</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🌐</span>HTML/CSS</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🔄</span>Redux Toolkit</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">⚡</span>Vite</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🟢</span>Node.js</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🚂</span>Express.js</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🍃</span>MongoDB</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🐬</span>MySQL</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🔐</span>JWT/RBAC</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Scrolls Right (Reverse) -->
+        <div class="marquee marquee-row-2">
+          <div class="marquee-track marquee-reverse">
+            <div class="marquee-group">
+              <span class="marquee-chip"><span class="marquee-chip-icon">🔌</span>REST APIs</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🌱</span>Spring Boot</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">⚡</span>Socket.io</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🔴</span>Redis</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🔁</span>GitHub Actions</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">▲</span>Vercel</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🐙</span>Git/GitHub</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🃏</span>Jest</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">📮</span>Postman</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🤖</span>Gemini API</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🧠</span>Agentic AI</span>
+            </div>
+            <div class="marquee-group" aria-hidden="true">
+              <span class="marquee-chip"><span class="marquee-chip-icon">🔌</span>REST APIs</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🌱</span>Spring Boot</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">⚡</span>Socket.io</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🔴</span>Redis</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🔁</span>GitHub Actions</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">▲</span>Vercel</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🐙</span>Git/GitHub</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🃏</span>Jest</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">📮</span>Postman</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🤖</span>Gemini API</span>
+              <span class="marquee-chip"><span class="marquee-chip-icon">🧠</span>Agentic AI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Filter pills -->
       <div class="skills-categories reveal" style="transition-delay: 0.1s" role="group" aria-label="Filter skills by category">
         <button class="cat-pill active" data-filter="all">All</button>
@@ -473,9 +542,33 @@
         Swipe to browse
       </div>
 
-      <!-- Projects grid / mobile carousel wrapper -->
-      <div class="projects-carousel-wrap">
-      <div class="projects-grid">
+      <!-- Projects slider wrapper -->
+      <div class="projects-slider-container">
+        <!-- Desktop / Tablet Slider Controls Header (Counter + Prev/Next buttons) -->
+        <div class="projects-slider-controls-header">
+          <div class="projects-counter" id="projectsCounter" aria-live="polite" aria-atomic="true">
+            <span class="projects-counter-current">01</span>
+            <span class="projects-counter-divider">/</span>
+            <span class="projects-counter-total">05</span>
+          </div>
+
+          <div class="projects-slider-arrows" role="toolbar" aria-label="Project slider navigation">
+            <button class="slider-arrow-btn slider-arrow-prev" id="sliderPrevBtn" aria-label="Previous project" disabled>
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15 19l-7-7 7-7"/>
+              </svg>
+            </button>
+            <button class="slider-arrow-btn slider-arrow-next" id="sliderNextBtn" aria-label="Next project">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Slider track container -->
+        <div class="projects-carousel-wrap" id="projectsSlider" tabindex="0" role="region" aria-label="Featured projects slider. Use left and right arrow keys to browse projects.">
+          <div class="projects-grid">
 
         <!-- Project 1: CareSync -->
         <article class="project-card reveal" data-tags="web ai backend" style="transition-delay: 0.1s" tabindex="0" role="button" aria-label="View CareSync project details" data-project="caresync">
@@ -588,7 +681,7 @@
             <div class="project-links">
               <a href="https://github.com/BalajiHariharan30" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="View ReserveX on GitHub">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37(3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
                 </svg>
                 GitHub
               </a>
@@ -671,8 +764,12 @@
           </div>
         </article>
 
-      </div><!-- .projects-grid -->
-      </div><!-- .projects-carousel-wrap -->
+          </div><!-- .projects-grid -->
+        </div><!-- .projects-carousel-wrap -->
+
+        <!-- Slider progress pagination dots -->
+        <div class="projects-slider-dots" id="projectsSliderDots" role="tablist" aria-label="Project slider pagination"></div>
+      </div><!-- .projects-slider-container -->
     </div>
   </section>
 
@@ -1019,5 +1116,7 @@
 
   <!-- ===== MAIN SCRIPT (deferred for performance) ===== -->
   <script src="js/script.js" defer></script>
+  <!-- ===== ENHANCEMENT SCRIPT: Skills Marquee + Projects Slider ===== -->
+  <script src="js/slider-marquee.js" defer></script>
 </body>
 </html>

@@ -2263,5 +2263,382 @@ body.light {
   }
 }
 
+/* ===== ENHANCEMENT: Skills Marquee + Projects Slider ===== */
 
+/* -------------------------------------------------------------
+   PART A: SKILLS MARQUEE (Infinite Dual-Row Auto-Scroll)
+   ------------------------------------------------------------- */
+.skills-marquee-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 10px;
+  margin-bottom: 36px;
+  width: 100%;
+}
 
+.marquee {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  /* Edge fade using linear-gradient mask */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+  padding: 4px 0;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track.marquee-reverse {
+  animation-direction: reverse;
+}
+
+.marquee-group {
+  display: flex;
+  gap: 1rem;
+  padding-right: 1rem;
+  flex-shrink: 0;
+}
+
+/* Pause marquee on hover (desktop) or touch-hold/active (mobile) */
+.marquee:hover .marquee-track,
+.marquee:active .marquee-track {
+  animation-play-state: paused !important;
+}
+
+/* Paused state controlled via IntersectionObserver when off-screen */
+.marquee-track.is-paused {
+  animation-play-state: paused !important;
+}
+
+/* Pill chip styling */
+.marquee-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: clamp(12px, 1.4vw, 13.5px);
+  font-weight: 500;
+  color: var(--text-primary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.5rem 1.15rem;
+  line-height: 1;
+  user-select: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+
+.marquee-chip:hover {
+  border-color: var(--border-glow);
+  background: var(--surface-hover);
+  transform: translateY(-2px);
+}
+
+.marquee-chip-icon {
+  font-size: 1.05em;
+  line-height: 1;
+  display: inline-block;
+}
+
+/* Mobile adjustments (<= 768px): faster duration, slightly smaller chips */
+@media (max-width: 768px) {
+  .skills-marquee-container {
+    gap: 0.65rem;
+    margin-bottom: 28px;
+  }
+
+  .marquee-track {
+    animation-duration: 20s;
+  }
+
+  .marquee-group {
+    gap: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .marquee-chip {
+    padding: 0.42rem 0.9rem;
+    font-size: 12px;
+  }
+}
+
+/* Keyframes for seamless 50% loop */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Accessibility: Reduced motion disables animation and allows manual scroll */
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .marquee-track {
+    animation: none !important;
+  }
+}
+
+/* -------------------------------------------------------------
+   PART B: PROJECTS SLIDER UPGRADE
+   ------------------------------------------------------------- */
+.projects-slider-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+}
+
+/* Slider Controls Header (Counter + Prev/Next buttons) */
+.projects-slider-controls-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 1.25rem;
+  padding: 0 4px;
+}
+
+/* Counter look: 12px, 500 weight, letter-spacing .08em, 80% opacity */
+.projects-counter {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.8;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  user-select: none;
+}
+
+.projects-counter-current {
+  color: var(--cyan);
+  font-weight: 600;
+}
+
+.projects-counter-divider {
+  opacity: 0.6;
+}
+
+/* Prev / Next desktop arrow buttons */
+.projects-slider-arrows {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.slider-arrow-btn {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+  user-select: none;
+}
+
+.slider-arrow-btn:hover:not(:disabled) {
+  border-color: var(--cyan);
+  background: var(--surface-hover);
+  color: var(--cyan-bright);
+  transform: translateY(-1px);
+}
+
+.slider-arrow-btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.96);
+}
+
+.slider-arrow-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.slider-arrow-btn:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+/* Hide desktop arrows on screens under 768px */
+@media (max-width: 767px) {
+  .projects-slider-arrows {
+    display: none !important;
+  }
+}
+
+/* Slider Track Container with native swipe & CSS scroll-snap */
+.projects-carousel-wrap {
+  display: flex !important;
+  width: 100%;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  scroll-snap-type: x mandatory !important;
+  scrollbar-width: none !important;
+  -webkit-overflow-scrolling: touch !important;
+  padding: 16px 8px 24px !important;
+  margin: 0 !important;
+  position: relative;
+  cursor: grab;
+}
+
+.projects-carousel-wrap::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.projects-carousel-wrap:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px;
+  border-radius: var(--radius-md);
+}
+
+/* Dragging state with pointer events */
+.projects-carousel-wrap.is-dragging {
+  cursor: grabbing !important;
+  user-select: none !important;
+  scroll-behavior: auto !important;
+}
+
+.projects-carousel-wrap.no-snap {
+  scroll-snap-type: none !important;
+}
+
+/* Projects grid converted to flexible single-row carousel flex container */
+.projects-grid {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  gap: 1rem !important;
+  width: max-content !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Individual Project Cards inside slider */
+.project-card {
+  flex: 0 0 85% !important;
+  width: auto !important;
+  min-width: 280px !important;
+  max-width: none !important;
+  scroll-snap-align: center !important;
+  scroll-snap-stop: normal !important;
+  /* Active-card emphasis transition */
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.35s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+  transform: scale(0.96);
+  opacity: 0.7;
+  will-change: transform, opacity;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .project-card {
+    flex: 0 0 380px !important;
+  }
+}
+
+/* Active centered card state */
+.project-card.is-active-card {
+  transform: scale(1.03) !important;
+  opacity: 1 !important;
+  border-color: rgba(99, 179, 237, 0.4) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45) !important;
+  z-index: 2;
+}
+
+/* Subtle 3D tilt on card hover (desktop only with fine pointer) */
+@media (hover: hover) and (pointer: fine) {
+  .projects-carousel-wrap:not(.is-dragging) .project-card {
+    transform-style: preserve-3d;
+    perspective: 900px;
+  }
+}
+
+/* Progress dots under the slider */
+.projects-slider-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  width: 100%;
+}
+
+.slider-dot {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  min-height: 10px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  position: relative;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, border-color 0.3s ease;
+}
+
+/* Invisible 44x44px touch tap-target padding */
+.slider-dot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+}
+
+.slider-dot:hover {
+  border-color: var(--cyan);
+  background: var(--surface-hover);
+}
+
+.slider-dot:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+/* Active dot stretches into a pill */
+.slider-dot.is-active {
+  width: 28px;
+  background: var(--cyan);
+  border-color: var(--cyan);
+}
+
+/* Accessibility: Stop active-card scaling on prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .project-card {
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+  .projects-carousel-wrap {
+    scroll-behavior: auto !important;
+  }
+}
